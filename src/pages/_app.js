@@ -1,3 +1,4 @@
+import RouteGuard from "@/services/RouteGuard";
 import "@/styles/globals.css";
 import { Merriweather } from "next/font/google";
 
@@ -10,8 +11,10 @@ const merriweather = Merriweather({
 
 export default function App({ Component, pageProps }) {
   return (
-    <main className={merriweather.className}>
-      <Component {...pageProps} />
-    </main>
+    <RouteGuard>
+      <main className={merriweather.className}>
+        <Component {...pageProps} />
+      </main>
+    </RouteGuard>
   );
 }
