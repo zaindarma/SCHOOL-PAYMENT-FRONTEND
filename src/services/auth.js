@@ -35,7 +35,59 @@ export const register = async (payload) => {
   }
 };
 
-export function getCurrentUser(token) {
-  const decoded = jwtDecode(token);
-  return decoded.sub;
+export function getToken() {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+}
+
+export function getCurrentUser() {
+  const token = getToken();
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+    return decoded?.sub || null;
+  } catch (err) {
+    console.log("Invalid token:", err);
+    return null;
+  }
+}
+
+export function isAuthenticated() {
+  const token = getToken();
+  if (!token) return false;
+
+  try {
+    const decoded = jwtDecode(token);
+    // Check if Token is Expired
+    if (decoded.exp * 1000 < Date.now()) {
+      logout(); // Remove token if expired
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.log("Authentication check failed:", err);
+    return false;
+  }
+}
+export function isAdminUser() {
+  const token = getToken();
+  if (!token) return false;
+
+  try {
+    const decoded = jwtDecode(token);
+
+    return decoded.role === "ADMIN"; // Check if isAdmin is true
+  } catch (err) {
+    console.log("Admin check failed:", err);
+    return false;
+  }
+}
+
+// Handle Logout
+export function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "/login";
 }
