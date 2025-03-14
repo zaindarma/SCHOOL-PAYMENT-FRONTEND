@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/router";
 
-const Navbar = ({ onClick }) => {
+const NavbarPay = ({ onClick }) => {
   const router = useRouter();
 
   const [token, setToken] = useState(null);
@@ -21,10 +21,10 @@ const Navbar = ({ onClick }) => {
 
   return (
     <nav
-      className={`fixed z-30 top-0 left-0 w-full flex flex-wrap items-center justify-between px-16 bg-[#79242f] shadow-md p-4 transition-transform duration-300`}
+      className={`fixed z-30 top-0 left-0 w-full flex flex-wrap items-center justify-between px-16 bg-[#0D9488] shadow-md p-4 transition-transform duration-300`}
     >
       <Link href={"/main"}>
-        <h1 class="text-xl text-white font-bold">MIAW SCHOOL</h1>
+        <h1 class="text-xl text-white font-bold">PayIND</h1>
       </Link>
 
       <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
@@ -41,7 +41,7 @@ const Navbar = ({ onClick }) => {
               </Link>
             </li>
             <li>
-              <Link class="md:p-4 py-3 px-0 block" href="/payind">
+              <Link class="md:p-4 py-3 px-0 block" href="#">
                 Payment
               </Link>
             </li>
@@ -89,4 +89,4 @@ const Navbar = ({ onClick }) => {
   );
 };
 
-export default Navbar;
+export default NavbarPay;
