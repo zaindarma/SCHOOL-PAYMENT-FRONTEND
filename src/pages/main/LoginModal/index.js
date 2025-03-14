@@ -44,22 +44,22 @@ export default function LoginModal({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center backdrop-blur-2xl transition-opacity duration-800 ${
+      className={`fixed inset-0 flex items-center justify-center backdrop-blur-md transition-opacity duration-800 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div
-        className={`bg-white p-6 rounded-lg shadow-lg max-w-md w-full transition-transform ${
+        className={`bg-[#79242f] p-6 rounded-lg shadow-lg max-w-md w-full transition-transform ${
           isVisible ? "scale-100" : "scale-30"
         }`}
       >
-        <h2 className="text-xl font-semibold mb-4">Login</h2>
+        <h2 className="text-xl text-white font-semibold mb-4">Login</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <input
             id="identifier"
             type="identifier"
             placeholder="Email / NIS"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-white"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
           />
@@ -67,11 +67,11 @@ export default function LoginModal({ isOpen, onClose }) {
             id="password"
             type="password"
             placeholder="Password"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="w-full bg-blue-500 text-white p-2 rounded">
+          <button className="w-full bg-red-700 text-white p-2 rounded">
             Login
           </button>
           <button className="w-full text-gray-500 mt-2" onClick={onClose}>

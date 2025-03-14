@@ -4,6 +4,38 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const RegisterPage = () => {
+  const [errorRegister, setErrorRegister] = useState(null);
+
+  const router = useRouter();
+
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    const payload = {
+      nis: e.target.nis.value,
+      name: e.target.name.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      confirmPassword: e.target.confirmPassword.value,
+    };
+
+    try {
+      const res = await register(payload);
+
+      if (!res.status) {
+        setErrorRegister(
+          res.response?.data.data ||
+            res.error?.response?.data?.data ||
+            "An unexpected error occurred"
+        );
+      } else {
+        router.push("/register/registsuccess");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorRegister("An unexpected error occurred");
+    }
+  }
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
@@ -64,30 +96,35 @@ const RegisterPage = () => {
                 </div>
               </div>
 
-              <form className="mx-auto max-w-xs">
+              <form onSubmit={handleRegister} className="mx-auto max-w-xs">
                 <input
+                  id="nis"
                   className="w-full mb-5 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="nis"
                   placeholder="NIS"
                 />
                 <input
+                  id="name"
                   className="w-full mb-5 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="name"
                   placeholder="Name"
                 />
                 <input
+                  id="email"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="email"
                   placeholder="Email"
                 />
                 <input
+                  id="password"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                   type="password"
                   placeholder="Password"
                 />
                 <input
+                  id="confirmPassword"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password"
+                  type="confirmPassword"
                   placeholder="Confirm Password"
                 />
                 <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
