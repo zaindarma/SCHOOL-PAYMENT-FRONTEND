@@ -3,6 +3,7 @@ import ArrowDown from "./ArrowDown";
 import Chart from "./Chart";
 import Groups from "./Groups";
 import PhotoMerge from "./PhotoMerge";
+import Plus from "./Plus";
 import School from "./School";
 import SidebarButton from "./SidebarButton";
 import Wallet from "./Wallet";
@@ -16,5 +17,6 @@ const Icons = {
   Wallet,
   School,
   PhotoMerge,
+  Plus,
 };
 export default Icons;
