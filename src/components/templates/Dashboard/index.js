@@ -1,8 +1,11 @@
 import Icons from "@/components/atoms/Icons";
 import React from "react";
 import "flowbite";
+import { useRouter } from "next/router";
 
 const Dashboard = ({ children }) => {
+  const router = useRouter();
+  const path = router.asPath.split("/").filter(Boolean).pop().toUpperCase();
   return (
     <>
       <button
@@ -24,55 +27,23 @@ const Dashboard = ({ children }) => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
+              <div className="flex items-center justify-center p-2 text-gray-900  dark:text-white font-bold">
+                <p className="ms-3">{path}</p>
+              </div>
+            </li>
+            <li>
               <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => router.push("/admin/dashboard")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer"
               >
                 <Icons.Chart />
                 <span className="ms-3">Dashboard</span>
               </a>
             </li>
-            <li>
-              <button
-                type="button"
-                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-example"
-                data-collapse-toggle="dropdown-example"
-              >
-                <Icons.Groups />
-                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Student</span>
-                <Icons.ArrowDown />
-              </button>
-              <ul id="dropdown-example" className="hidden py-2 space-y-2">
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Products
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Payment
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Invoice
-                  </a>
-                </li>
-              </ul>
-            </li>
+
             <li>
               <a
-                href="#"
+                onClick={() => router.push("/admin/users")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.AccountBox />
@@ -81,7 +52,16 @@ const Dashboard = ({ children }) => {
             </li>
             <li>
               <a
-                href="#"
+                onClick={() => router.push("/admin/student")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <Icons.Badge />
+                <span className="flex-1 ms-3 whitespace-nowrap">Student</span>
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => router.push("/admin/payment")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.Wallet />
@@ -90,7 +70,7 @@ const Dashboard = ({ children }) => {
             </li>
             <li>
               <a
-                href="#"
+                onClick={() => router.push("/admin/classes")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.School />
@@ -99,7 +79,7 @@ const Dashboard = ({ children }) => {
             </li>
             <li>
               <a
-                href="#"
+                onClick={() => router.push("/admin/school-year")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.PhotoMerge />

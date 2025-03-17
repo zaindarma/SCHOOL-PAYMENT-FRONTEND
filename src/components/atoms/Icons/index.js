@@ -1,5 +1,6 @@
 import AccountBox from "./AccountBox";
 import ArrowDown from "./ArrowDown";
+import Badge from "./Badge";
 import Chart from "./Chart";
 import Groups from "./Groups";
 import PhotoMerge from "./PhotoMerge";
@@ -18,5 +19,6 @@ const Icons = {
   School,
   PhotoMerge,
   Plus,
+  Badge,
 };
 export default Icons;

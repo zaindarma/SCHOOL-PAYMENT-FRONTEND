@@ -91,3 +91,18 @@ export function logout() {
   localStorage.removeItem("token");
   window.location.href = "/login";
 }
+
+export async function refreshToken(token) {
+  try {
+    const response = await axios.get(`${api}/users/me/refresh`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log("Failed to refresh token, logging out");
+    logout(); // Redirect to login if refresh fails
+    return null;
+  }
+}
