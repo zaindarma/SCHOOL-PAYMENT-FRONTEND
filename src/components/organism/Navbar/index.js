@@ -37,7 +37,7 @@ const Navbar = ({ onClick }) => {
             </li>
             <li>
               <Link class="md:p-4 py-3 px-0 block" href="#">
-                News
+                E-Campus
               </Link>
             </li>
             <li>
