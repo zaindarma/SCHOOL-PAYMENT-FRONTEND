@@ -9,9 +9,8 @@ export const useStudents = (page = 0, size = 10, token) => {
   useEffect(() => {
     if (!token) return;
 
-    setData(null);
-    setError(null);
     setLoading(true);
+    setError(null);
 
     const fetchStudents = async () => {
       try {
@@ -27,5 +26,11 @@ export const useStudents = (page = 0, size = 10, token) => {
     fetchStudents();
   }, [page, size, token]);
 
-  return { data, loading, error };
+  return {
+    data,
+    loading,
+    error,
+    totalPages: data?.totalPages || 1, // Total pages from API response
+    currentPage: data?.currentPage || 0, // Current page from API response
+  };
 };
