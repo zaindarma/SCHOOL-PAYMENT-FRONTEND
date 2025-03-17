@@ -33,8 +33,9 @@ const PayindPage = () => {
             </p>
             <div className="flex">
               <button className="bg-[#0D9488] text-white px-8 py-2 rounded-lg flex items-center">
-                Register now
+                Login now
               </button>
+              {/*If Token Exist = Check Payment*/}
               <button className="border-2 border-[#0D9488] text-[#0D9488]  px-8 py-2 ml-4 rounded-lg flex">
                 Contact Us
               </button>
@@ -95,7 +96,6 @@ const PayindPage = () => {
           </div>
         </div>
       </section>
-
       <section className="min-h-screen bg-gray-200"></section>
     </main>
   );

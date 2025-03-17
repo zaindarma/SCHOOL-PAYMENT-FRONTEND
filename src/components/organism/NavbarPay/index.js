@@ -41,7 +41,7 @@ const NavbarPay = ({ onClick }) => {
               </Link>
             </li>
             <li>
-              <Link class="md:p-4 py-3 px-0 block" href="#">
+              <Link class="md:p-4 py-3 px-0 block" href="/payment">
                 Payment
               </Link>
             </li>
@@ -75,7 +75,7 @@ const NavbarPay = ({ onClick }) => {
               </li>
               <li>
                 <button
-                  class="md:p-4 py-3 px-0 block bg-[#79242f] hover:text-blue-600"
+                  class="md:p-4 py-3 px-0 block bg-[#0D9488] hover:text-blue-600"
                   onClick={onClick}
                 >
                   Login
