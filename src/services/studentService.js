@@ -1,6 +1,8 @@
+import axios from "axios";
+const api = process.env.NEXT_PUBLIC_API;
 export async function getAllStudent(page = 0, size = 10, token) {
   try {
-    const response = await axios.get(`${api}/student?page=${page}&size=${size}`, {
+    const response = await axios.get(`${api}/students?page=${page}&size=${size}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,7 +24,7 @@ export async function createStudent({ nis, name, classId, birthdate, address, ph
       address,
       phoneNumber,
     };
-    const response = await axios.post(`${api}/student`, payload, {
+    const response = await axios.post(`${api}/students`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -43,7 +45,7 @@ export async function updateStudent(id, { nis, name, classId, birthdate, address
     if (birthdate) payload.birthdate = birthdate;
     if (address) payload.address = address;
     if (phoneNumber) payload.phoneNumber = phoneNumber;
-    const response = await axios.put(`${api}/student/${id}`, payload, {
+    const response = await axios.put(`${api}/students/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -57,7 +59,7 @@ export async function updateStudent(id, { nis, name, classId, birthdate, address
 
 export async function deleteStudent(id, token) {
   try {
-    const response = await axios.delete(`${api}/student/${id}`, {
+    const response = await axios.delete(`${api}/students/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,7 +74,7 @@ export async function deleteStudent(id, token) {
 //soft delete
 export async function softDeleteStudent(id, token) {
   try {
-    const response = await axios.put(`${api}/student/delete/${id}`, {
+    const response = await axios.put(`${api}/students/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -1,3 +1,5 @@
+import axios from "axios";
+const api = process.env.NEXT_PUBLIC_API;
 export async function getAllUser(page = 0, size = 10, token) {
   try {
     const response = await axios.get(`${api}/users?page=${page}&size=${size}`, {
