@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getAllStudent } from "@/services/studentService";
+import { getAllStudent, getStudentFilter } from "@/services/studentService";
 
-export const useStudents = (page = 0, size = 10, token) => {
+export const useStudents = (page = 0, size = 10, filters = {}, token) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,21 @@ export const useStudents = (page = 0, size = 10, token) => {
 
     const fetchStudents = async () => {
       try {
-        const studentData = await getAllStudent(page, size, token);
+        let studentData;
+
+        // Check if any filter is provided
+        const hasFilters = Object.values(filters).some(
+          (value) => value !== null && value !== undefined && value !== ""
+        );
+
+        if (hasFilters) {
+          // Use search service if any filter is provided
+          studentData = await getStudentFilter(page, size, filters, token);
+        } else {
+          // Otherwise, use getAllStudent
+          studentData = await getAllStudent(page, size, token);
+        }
+
         setData(studentData);
       } catch (err) {
         setError("Failed to fetch students.");
@@ -24,13 +38,13 @@ export const useStudents = (page = 0, size = 10, token) => {
     };
 
     fetchStudents();
-  }, [page, size, token]);
+  }, [page, size, filters, token]);
 
   return {
     data,
     loading,
     error,
-    totalPages: data?.totalPages || 1, // Total pages from API response
-    currentPage: data?.currentPage || 0, // Current page from API response
+    totalPages: data?.totalPages || 1,
+    currentPage: data?.currentPage || 0,
   };
 };
