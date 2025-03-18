@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useStudents } from "@/hooks/useStudents";
 import {
   createStudent,
+  deleteStudent,
   getStudentById,
+  softDeleteStudent,
   updateStudent,
 } from "@/services/studentService";
 import { useRouter } from "next/router";
@@ -12,6 +14,8 @@ import StudentTableFooter from "@/components/molecules/StudentTableFooter";
 import StudentForm from "@/components/molecules/StudentForm";
 import { getAllClasses } from "@/services/classesService";
 import { getToken } from "@/services/auth";
+import ConfirmationModal from "@/components/molecules/ConfirmationModal";
+import { useToast } from "@/context/ToastContext";
 
 const DashboardStudent = ({ token }) => {
   const [page, setPage] = useState(0);
@@ -19,6 +23,7 @@ const DashboardStudent = ({ token }) => {
   const [filters, setFilters] = useState({ search: "" }); // Filters state
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [formData, setFormData] = useState({
+    id: "",
     nis: "",
     name: "",
     classId: "",
@@ -30,6 +35,12 @@ const DashboardStudent = ({ token }) => {
   const [error, setError] = useState("");
   const [classes, setClasses] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const [isHardDelete, setIsHardDelete] = useState(false);
+  const [question, setQuestion] = useState("Are you sure?");
+  const [studentId, setStudentId] = useState(null);
+  const { showToast } = useToast();
+
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -43,8 +54,17 @@ const DashboardStudent = ({ token }) => {
     fetchClasses();
   }, [token]);
 
-  const router = useRouter();
-
+  const resetFormData = () => {
+    setFormData({
+      id: "",
+      nis: generateNIS(),
+      name: "",
+      classId: "",
+      birthdate: "",
+      address: "",
+      phoneNumber: "",
+    });
+  };
   // Fetch students dynamically based on filters
   const {
     data,
@@ -53,6 +73,10 @@ const DashboardStudent = ({ token }) => {
     totalPages,
     currentPage,
   } = useStudents(page, 10, filters, token);
+  const generateNIS = (year = new Date().getFullYear().toString().slice(2)) => {
+    const randomDigits = Math.floor(100000 + Math.random() * 900000); // 6 random digits
+    return `${year}${randomDigits}`;
+  };
 
   // Handles search input change
   const handleSearchChange = (event) => setSearch(event.target.value);
@@ -63,8 +87,17 @@ const DashboardStudent = ({ token }) => {
   };
 
   // Handle modal open/close
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    if (isModalOpen) {
+      resetFormData();
+      setIsEditing(false);
+    }
+  };
 
+  const togglePrompt = () => {
+    setIsPromptOpen(!isPromptOpen);
+  };
   // Handle form input change
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -75,18 +108,10 @@ const DashboardStudent = ({ token }) => {
     e.preventDefault();
     setLoadingSubmit(true);
     setError("");
-    setIsEditing(false);
     try {
       await createStudent(formData, token);
       toggleModal(); // Close modal
-      setFormData({
-        nis: "",
-        name: "",
-        classId: "",
-        birthdate: "",
-        address: "",
-        phoneNumber: "",
-      });
+      resetFormData();
       setFilters({ search: "" }); // Refresh list
     } catch (err) {
       setError("Failed to add student. Please try again.");
@@ -99,17 +124,10 @@ const DashboardStudent = ({ token }) => {
     setLoadingSubmit(true);
     setError("");
     try {
-      await updateStudent(formData, token);
+      await updateStudent(formData.id, formData, getToken());
       toggleModal(); // Close modal
-      setFormData({
-        nis: "",
-        name: "",
-        classId: "",
-        birthdate: "",
-        address: "",
-        phoneNumber: "",
-      });
-      setFilters({ search: "" }); // Refresh list
+      resetFormData();
+      setFilters({ search: "" });
     } catch (err) {
       setError("Failed to update student. Please try again.");
     } finally {
@@ -123,6 +141,7 @@ const DashboardStudent = ({ token }) => {
       const student = await getStudentById(id, getToken());
 
       setFormData({
+        id: student?.data.id,
         nis: student?.data.nis,
         name: student?.data.name,
         classId: student?.data.classData.id,
@@ -130,6 +149,7 @@ const DashboardStudent = ({ token }) => {
         address: student?.data.address,
         phoneNumber: student?.data.phoneNumber,
       });
+      setFilters({ search: "" });
     } catch (err) {
       setError("Failed to update student. Please try again.");
       console.log(err);
@@ -139,11 +159,40 @@ const DashboardStudent = ({ token }) => {
   };
 
   const handleSoftDelete = (id) => {
-    console.log("Soft delete student:", id);
+    setIsHardDelete(false);
+    setError("");
+    setQuestion("Are you sure you want to soft delete this student?");
+    setStudentId(id);
+    togglePrompt();
   };
-
+  const handleSoftDeleteConfirm = async () => {
+    try {
+      await softDeleteStudent(studentId, getToken());
+      setFilters({ search: "" }); // Refresh list
+      showToast("Student soft deleted successfully.");
+    } catch (err) {
+      showToast("Failed to delete student. Please try again.", true);
+    } finally {
+      togglePrompt();
+    }
+  };
   const handleDelete = (id) => {
-    console.log("Delete student:", id);
+    setIsHardDelete(true);
+    setError("");
+    setQuestion("Are you sure you want to delete this student?");
+    setStudentId(id);
+    togglePrompt();
+  };
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteStudent(studentId, getToken());
+      setFilters({ search: "" }); // Refresh list
+      showToast("Student deleted successfully.");
+    } catch (err) {
+      showToast("Failed to delete student. Please try again.", true);
+    } finally {
+      togglePrompt();
+    }
   };
   return (
     <div>
@@ -189,6 +238,12 @@ const DashboardStudent = ({ token }) => {
         loadingSubmit={loadingSubmit}
         classes={classes}
         isEditing={isEditing}
+      />
+      <ConfirmationModal
+        isOpen={isPromptOpen}
+        onCancel={togglePrompt}
+        onConfirm={isHardDelete ? handleDeleteConfirm : handleSoftDeleteConfirm}
+        question={question}
       />
     </div>
   );

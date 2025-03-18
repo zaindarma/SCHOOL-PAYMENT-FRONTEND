@@ -2,6 +2,7 @@ import Icons from "@/components/atoms/Icons";
 import React from "react";
 import "flowbite";
 import { useRouter } from "next/router";
+import { logout } from "@/services/auth";
 
 const Dashboard = ({ children }) => {
   const router = useRouter();
@@ -83,7 +84,27 @@ const Dashboard = ({ children }) => {
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.PhotoMerge />
-                <span className="flex-1 ms-3 whitespace-nowrap">School year</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  School year
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => router.push("/main")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Main website
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => logout}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
               </a>
             </li>
           </ul>
@@ -91,7 +112,9 @@ const Dashboard = ({ children }) => {
       </aside>
 
       <div className="p-4 sm:ml-64">
-        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">{children}</div>
+        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">
+          {children}
+        </div>
       </div>
     </>
   );
