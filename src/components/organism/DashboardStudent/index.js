@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useStudents } from "@/hooks/useStudents";
 import {
   createStudent,
+  deleteStudent,
   getStudentById,
+  softDeleteStudent,
   updateStudent,
 } from "@/services/studentService";
 import { useRouter } from "next/router";
@@ -12,6 +14,8 @@ import StudentTableFooter from "@/components/molecules/StudentTableFooter";
 import StudentForm from "@/components/molecules/StudentForm";
 import { getAllClasses } from "@/services/classesService";
 import { getToken } from "@/services/auth";
+import ConfirmationModal from "@/components/molecules/ConfirmationModal";
+import { useToast } from "@/context/ToastContext";
 
 const DashboardStudent = ({ token }) => {
   const [page, setPage] = useState(0);
@@ -31,6 +35,12 @@ const DashboardStudent = ({ token }) => {
   const [error, setError] = useState("");
   const [classes, setClasses] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const [isHardDelete, setIsHardDelete] = useState(false);
+  const [question, setQuestion] = useState("Are you sure?");
+  const [studentId, setStudentId] = useState(null);
+  const { showToast } = useToast();
+
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -85,6 +95,9 @@ const DashboardStudent = ({ token }) => {
     }
   };
 
+  const togglePrompt = () => {
+    setIsPromptOpen(!isPromptOpen);
+  };
   // Handle form input change
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -114,7 +127,7 @@ const DashboardStudent = ({ token }) => {
       await updateStudent(formData.id, formData, getToken());
       toggleModal(); // Close modal
       resetFormData();
-      setFilters({ search: "" }); // Refresh list
+      setFilters({ search: "" });
     } catch (err) {
       setError("Failed to update student. Please try again.");
     } finally {
@@ -136,6 +149,7 @@ const DashboardStudent = ({ token }) => {
         address: student?.data.address,
         phoneNumber: student?.data.phoneNumber,
       });
+      setFilters({ search: "" });
     } catch (err) {
       setError("Failed to update student. Please try again.");
       console.log(err);
@@ -145,11 +159,40 @@ const DashboardStudent = ({ token }) => {
   };
 
   const handleSoftDelete = (id) => {
-    console.log("Soft delete student:", id);
+    setIsHardDelete(false);
+    setError("");
+    setQuestion("Are you sure you want to soft delete this student?");
+    setStudentId(id);
+    togglePrompt();
   };
-
+  const handleSoftDeleteConfirm = async () => {
+    try {
+      await softDeleteStudent(studentId, getToken());
+      setFilters({ search: "" }); // Refresh list
+      showToast("Student soft deleted successfully.");
+    } catch (err) {
+      showToast("Failed to delete student. Please try again.", true);
+    } finally {
+      togglePrompt();
+    }
+  };
   const handleDelete = (id) => {
-    console.log("Delete student:", id);
+    setIsHardDelete(true);
+    setError("");
+    setQuestion("Are you sure you want to delete this student?");
+    setStudentId(id);
+    togglePrompt();
+  };
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteStudent(studentId, getToken());
+      setFilters({ search: "" }); // Refresh list
+      showToast("Student deleted successfully.");
+    } catch (err) {
+      showToast("Failed to delete student. Please try again.", true);
+    } finally {
+      togglePrompt();
+    }
   };
   return (
     <div>
@@ -195,6 +238,12 @@ const DashboardStudent = ({ token }) => {
         loadingSubmit={loadingSubmit}
         classes={classes}
         isEditing={isEditing}
+      />
+      <ConfirmationModal
+        isOpen={isPromptOpen}
+        onCancel={togglePrompt}
+        onConfirm={isHardDelete ? handleDeleteConfirm : handleSoftDeleteConfirm}
+        question={question}
       />
     </div>
   );

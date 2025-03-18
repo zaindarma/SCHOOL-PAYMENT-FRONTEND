@@ -1,4 +1,5 @@
 import Button from "@/components/atoms/Button";
+import Icons from "@/components/atoms/Icons";
 import { useState } from "react";
 
 const SearchBar = ({ handleSearchChange, handleSearchSubmit, search }) => {
@@ -18,7 +19,7 @@ const SearchBar = ({ handleSearchChange, handleSearchSubmit, search }) => {
         type="submit"
         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
       >
-        Search
+        <Icons.Search />
       </button>
     </form>
   );

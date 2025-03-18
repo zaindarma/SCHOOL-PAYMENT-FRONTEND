@@ -1,4 +1,5 @@
-import React from "react";
+import Icons from "@/components/atoms/Icons";
+import React, { useState, useEffect, useRef } from "react";
 
 const StudentTableRow = ({
   data,
@@ -8,6 +9,39 @@ const StudentTableRow = ({
   loading,
   fetchError,
 }) => {
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState({
+    top: 0,
+    right: 0,
+  });
+  const dropdownRef = useRef(null);
+
+  // ✅ Function to toggle dropdown & calculate position
+  const toggleDropdown = (id, event) => {
+    if (openDropdown === id) {
+      setOpenDropdown(null);
+    } else {
+      const buttonRect = event.target.getBoundingClientRect();
+      setDropdownPosition({
+        top: buttonRect.bottom + window.scrollY + 4, // 4px margin below the button
+        right: buttonRect.right - buttonRect.left + buttonRect.width, // Align with the button
+      });
+      setOpenDropdown(id);
+    }
+  };
+
+  // ✅ Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -17,7 +51,7 @@ const StudentTableRow = ({
       ) : fetchError ? (
         <p className="text-center p-4 text-red-500">{fetchError}</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto relative">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-100 dark:bg-gray-800">
               <tr>
@@ -31,7 +65,7 @@ const StudentTableRow = ({
                   Phone
                 </th>
                 <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">
-                  Phone
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -40,35 +74,26 @@ const StudentTableRow = ({
                 data?.data.map((student) => (
                   <tr
                     key={student.id}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className={`hover:bg-gray-100 dark:hover:bg-gray-800 ${
+                      student.deletedAt && "bg-red-950"
+                    }`}
                   >
-                    <td className="px-6 py-2 text-sm text-gray-900 dark:text-gray-300">
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 dark:text-gray-300">
                       {student.name}
                     </td>
-                    <td className="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-1 py-1 text-sm text-gray-500 dark:text-gray-400">
                       {student.classData.className}
                     </td>
-                    <td className="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-1 py-1 text-sm text-gray-500 dark:text-gray-400">
                       {student.phoneNumber}
                     </td>
-                    <td className="px-6 py-2 text-center space-x-2 gap-y-2">
+                    <td className="px-1 py-1 text-center relative">
+                      {/* Three dots button */}
                       <button
-                        className="px-2 py-1 border border-blue-500 text-white hover:bg-blue-800 rounded-lg"
-                        onClick={() => handleUpdate(student.id)}
+                        className="px-1 text-gray-500 dark:text-gray-300 hover:bg-gray-700 dark:hover:text-gray-400"
+                        onClick={(e) => toggleDropdown(student.id, e)}
                       >
-                        Update
-                      </button>
-                      <button
-                        className="px-2 py-1 border border-yellow-500 text-white hover:bg-yellow-800 rounded-lg"
-                        onClick={() => handleSoftDelete(student.id)}
-                      >
-                        Soft Delete
-                      </button>
-                      <button
-                        className="px-2 py-1 border border-red-500 text-white hover:bg-red-800 rounded-lg"
-                        onClick={() => handleDelete(student.id)}
-                      >
-                        Delete
+                        <Icons.MoreVert />
                       </button>
                     </td>
                   </tr>
@@ -76,7 +101,7 @@ const StudentTableRow = ({
               ) : (
                 <tr>
                   <td
-                    colSpan="3"
+                    colSpan="4"
                     className="text-center py-4 text-gray-500 dark:text-gray-400"
                   >
                     No students found.
@@ -85,6 +110,45 @@ const StudentTableRow = ({
               )}
             </tbody>
           </table>
+        </div>
+      )}
+      {/* ✅ Position the dropdown dynamically */}
+      {openDropdown && (
+        <div
+          ref={dropdownRef}
+          className="absolute z-[9999] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg "
+          style={{
+            top: `${dropdownPosition.top}px`,
+            right: `${dropdownPosition.right}px`,
+          }}
+        >
+          <button
+            className="flex text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => {
+              handleUpdate(openDropdown);
+              setOpenDropdown(null);
+            }}
+          >
+            Update
+          </button>
+          <button
+            className="flex text-left px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => {
+              handleSoftDelete(openDropdown);
+              setOpenDropdown(null);
+            }}
+          >
+            Soft Delete
+          </button>
+          <button
+            className="flex text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => {
+              handleDelete(openDropdown);
+              setOpenDropdown(null);
+            }}
+          >
+            Delete
+          </button>
         </div>
       )}
     </>
