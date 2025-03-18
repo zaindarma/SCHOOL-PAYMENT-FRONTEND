@@ -19,6 +19,7 @@ const DashboardStudent = ({ token }) => {
   const [filters, setFilters] = useState({ search: "" }); // Filters state
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [formData, setFormData] = useState({
+    id: "",
     nis: "",
     name: "",
     classId: "",
@@ -43,8 +44,17 @@ const DashboardStudent = ({ token }) => {
     fetchClasses();
   }, [token]);
 
-  const router = useRouter();
-
+  const resetFormData = () => {
+    setFormData({
+      id: "",
+      nis: generateNIS(),
+      name: "",
+      classId: "",
+      birthdate: "",
+      address: "",
+      phoneNumber: "",
+    });
+  };
   // Fetch students dynamically based on filters
   const {
     data,
@@ -53,6 +63,10 @@ const DashboardStudent = ({ token }) => {
     totalPages,
     currentPage,
   } = useStudents(page, 10, filters, token);
+  const generateNIS = (year = new Date().getFullYear().toString().slice(2)) => {
+    const randomDigits = Math.floor(100000 + Math.random() * 900000); // 6 random digits
+    return `${year}${randomDigits}`;
+  };
 
   // Handles search input change
   const handleSearchChange = (event) => setSearch(event.target.value);
@@ -63,7 +77,13 @@ const DashboardStudent = ({ token }) => {
   };
 
   // Handle modal open/close
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    if (isModalOpen) {
+      resetFormData();
+      setIsEditing(false);
+    }
+  };
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -75,18 +95,10 @@ const DashboardStudent = ({ token }) => {
     e.preventDefault();
     setLoadingSubmit(true);
     setError("");
-    setIsEditing(false);
     try {
       await createStudent(formData, token);
       toggleModal(); // Close modal
-      setFormData({
-        nis: "",
-        name: "",
-        classId: "",
-        birthdate: "",
-        address: "",
-        phoneNumber: "",
-      });
+      resetFormData();
       setFilters({ search: "" }); // Refresh list
     } catch (err) {
       setError("Failed to add student. Please try again.");
@@ -99,16 +111,9 @@ const DashboardStudent = ({ token }) => {
     setLoadingSubmit(true);
     setError("");
     try {
-      await updateStudent(formData, token);
+      await updateStudent(formData.id, formData, getToken());
       toggleModal(); // Close modal
-      setFormData({
-        nis: "",
-        name: "",
-        classId: "",
-        birthdate: "",
-        address: "",
-        phoneNumber: "",
-      });
+      resetFormData();
       setFilters({ search: "" }); // Refresh list
     } catch (err) {
       setError("Failed to update student. Please try again.");
@@ -123,6 +128,7 @@ const DashboardStudent = ({ token }) => {
       const student = await getStudentById(id, getToken());
 
       setFormData({
+        id: student?.data.id,
         nis: student?.data.nis,
         name: student?.data.name,
         classId: student?.data.classData.id,

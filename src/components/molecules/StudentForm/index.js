@@ -23,6 +23,13 @@ const StudentForm = ({
           {error && <p className="text-red-500 mb-2">{error}</p>}
 
           <form onSubmit={handleSubmit} className="space-y-3">
+            <input
+              name="id"
+              type="number"
+              value={formData.id}
+              hidden
+              readOnly
+            />
             <InputField
               type="text"
               name="nis"

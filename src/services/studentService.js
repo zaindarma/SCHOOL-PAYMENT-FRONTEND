@@ -111,6 +111,8 @@ export async function updateStudent(
     });
     return response.data;
   } catch (err) {
+    console.log(err);
+
     console.log("Failed to update student");
     return err;
   }
