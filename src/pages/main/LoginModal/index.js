@@ -32,7 +32,7 @@ export default function LoginModal({ isOpen, onClose }) {
       } else {
         const errorMsg = res.error?.response?.data?.data;
         console.log("Login error:", errorMsg);
-        setErrorLogin(errorMsg);
+        // setErrorLogin(errorMsg);
       }
     } catch (error) {
       console.error("Unexpected error:", error);
