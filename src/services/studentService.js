@@ -133,16 +133,24 @@ export async function deleteStudent(id, token) {
 }
 
 //soft delete
+
 export async function softDeleteStudent(id, token) {
   try {
-    const response = await axios.put(`${api}/students/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.put(
+      `${api}/students/delete/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
-    console.log("Failed to delete student");
+    console.error(
+      "Failed to delete student",
+      err.response?.data || err.message
+    );
     return err;
   }
 }
