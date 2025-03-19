@@ -36,6 +36,6 @@ export const useUsers = (page = 0, size = 10, role = "", token) => {
     error,
     totalPages: data?.totalPages || 1,
     currentPage: data?.currentPage || 0,
-    fetchUsers, // 👈 Return function
+    fetchUsers, //  Return function
   };
 };

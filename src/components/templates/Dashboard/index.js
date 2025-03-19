@@ -1,5 +1,5 @@
 import Icons from "@/components/atoms/Icons";
-import React from "react";
+import React, { useState } from "react";
 import "flowbite";
 import { useRouter } from "next/router";
 import { logout } from "@/services/auth";
@@ -7,12 +7,22 @@ import { logout } from "@/services/auth";
 const Dashboard = ({ children }) => {
   const router = useRouter();
   const path = router.asPath.split("/").filter(Boolean).pop().toUpperCase();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleNavigation = (route) => {
+    router.push(route);
+    setIsSidebarOpen(false); // Close sidebar when navigating
+  };
+
   return (
     <>
       <button
-        data-drawer-target="sidebar-multi-level-sidebar"
-        data-drawer-toggle="sidebar-multi-level-sidebar"
-        aria-controls="sidebar-multi-level-sidebar"
+        onClick={toggleSidebar}
         type="button"
         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
@@ -20,72 +30,79 @@ const Dashboard = ({ children }) => {
         <Icons.SidebarButton />
       </button>
 
-      <aside id="sidebar-multi-level-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+      <aside
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
+        aria-label="Sidebar"
+      >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <div className="flex items-center justify-center p-2 text-gray-900  dark:text-white font-bold">
+              <div className="flex items-center justify-center p-2 text-gray-900 dark:text-white font-bold">
                 <p className="ms-3">{path}</p>
               </div>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/dashboard")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer">
+              <a
+                onClick={() => handleNavigation("/admin/dashboard")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer"
+              >
                 <Icons.Chart />
                 <span className="ms-3">Dashboard</span>
               </a>
             </li>
 
             <li>
-              <a onClick={() => router.push("/admin/users")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a
+                onClick={() => handleNavigation("/admin/users")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Icons.AccountBox />
                 <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
               </a>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/student")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a
+                onClick={() => handleNavigation("/admin/student")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Icons.Badge />
                 <span className="flex-1 ms-3 whitespace-nowrap">Student</span>
               </a>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/payment")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a
+                onClick={() => handleNavigation("/admin/payment")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Icons.Wallet />
                 <span className="flex-1 ms-3 whitespace-nowrap">Payment</span>
               </a>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/payment-type")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a
+                onClick={() => handleNavigation("/admin/payment-type")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Icons.Wallet />
-                <span className="flex-1 ms-3 whitespace-nowrap">Payment-Type</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Payment-Type
+                </span>
               </a>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/classes")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a
+                onClick={() => handleNavigation("/admin/classes")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Icons.School />
                 <span className="flex-1 ms-3 whitespace-nowrap">Classes</span>
               </a>
             </li>
             <li>
-              <a onClick={() => router.push("/admin/school-year")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <Icons.PhotoMerge />
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  School year
-                </span>
-              </a>
-            </li>
-            <li>
               <a
-                onClick={() => router.push("/main")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Main website
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => logout}
+                onClick={() => handleNavigation("/admin/school-year")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <Icons.PhotoMerge />
@@ -96,7 +113,7 @@ const Dashboard = ({ children }) => {
             </li>
             <li>
               <a
-                onClick={() => router.push("/main")}
+                onClick={() => handleNavigation("/main")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap">
@@ -106,7 +123,7 @@ const Dashboard = ({ children }) => {
             </li>
             <li>
               <a
-                onClick={() => logout}
+                onClick={() => logout()}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
