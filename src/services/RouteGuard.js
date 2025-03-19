@@ -19,7 +19,7 @@ const RouteGuard = ({ children }) => {
         }
       } catch (err) {
         console.log("Failed to refresh token, logging out...");
-        router.replace("/login"); // Redirect to login if refresh fails
+        router.replace("/login");
       }
     };
 

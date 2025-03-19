@@ -19,11 +19,7 @@ const Dashboard = ({ children }) => {
         <Icons.SidebarButton />
       </button>
 
-      <aside
-        id="sidebar-multi-level-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-        aria-label="Sidebar"
-      >
+      <aside id="sidebar-multi-level-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
@@ -32,56 +28,44 @@ const Dashboard = ({ children }) => {
               </div>
             </li>
             <li>
-              <a
-                onClick={() => router.push("/admin/dashboard")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer"
-              >
+              <a onClick={() => router.push("/admin/dashboard")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer">
                 <Icons.Chart />
                 <span className="ms-3">Dashboard</span>
               </a>
             </li>
 
             <li>
-              <a
-                onClick={() => router.push("/admin/users")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a onClick={() => router.push("/admin/users")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Icons.AccountBox />
                 <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
               </a>
             </li>
             <li>
-              <a
-                onClick={() => router.push("/admin/student")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a onClick={() => router.push("/admin/student")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Icons.Badge />
                 <span className="flex-1 ms-3 whitespace-nowrap">Student</span>
               </a>
             </li>
             <li>
-              <a
-                onClick={() => router.push("/admin/payment")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a onClick={() => router.push("/admin/payment")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Icons.Wallet />
                 <span className="flex-1 ms-3 whitespace-nowrap">Payment</span>
               </a>
             </li>
             <li>
-              <a
-                onClick={() => router.push("/admin/classes")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a onClick={() => router.push("/admin/payment-type")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Icons.Wallet />
+                <span className="flex-1 ms-3 whitespace-nowrap">Payment-Type</span>
+              </a>
+            </li>
+            <li>
+              <a onClick={() => router.push("/admin/classes")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Icons.School />
                 <span className="flex-1 ms-3 whitespace-nowrap">Classes</span>
               </a>
             </li>
             <li>
-              <a
-                onClick={() => router.push("/admin/school-year")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a onClick={() => router.push("/admin/school-year")} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Icons.PhotoMerge />
                 <span className="flex-1 ms-3 whitespace-nowrap">School year</span>
               </a>
