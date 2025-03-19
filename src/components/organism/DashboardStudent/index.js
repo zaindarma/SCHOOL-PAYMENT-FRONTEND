@@ -7,7 +7,6 @@ import {
   softDeleteStudent,
   updateStudent,
 } from "@/services/studentService";
-import { useRouter } from "next/router";
 import SearchBar from "@/components/molecules/SearchBar/inedex";
 import StudentTableRow from "@/components/molecules/StudentTableRow";
 import StudentTableFooter from "@/components/molecules/StudentTableFooter";
@@ -19,7 +18,7 @@ import { useToast } from "@/context/ToastContext";
 
 const DashboardStudent = ({ token }) => {
   const [page, setPage] = useState(0);
-  const [search, setSearch] = useState(""); // Search state
+  const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({ search: "" }); // Filters state
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [formData, setFormData] = useState({
@@ -107,14 +106,14 @@ const DashboardStudent = ({ token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoadingSubmit(true);
-    setError("");
     try {
       await createStudent(formData, token);
       toggleModal(); // Close modal
       resetFormData();
       setFilters({ search: "" }); // Refresh list
+      showToast("Student added successfully.");
     } catch (err) {
-      setError("Failed to add student. Please try again.");
+      showToast("Failed to add student. Please try again.", true);
     } finally {
       setLoadingSubmit(false);
     }
@@ -122,14 +121,14 @@ const DashboardStudent = ({ token }) => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     setLoadingSubmit(true);
-    setError("");
     try {
       await updateStudent(formData.id, formData, getToken());
       toggleModal(); // Close modal
       resetFormData();
       setFilters({ search: "" });
+      showToast("Student updated successfully.");
     } catch (err) {
-      setError("Failed to update student. Please try again.");
+      showToast("Failed to update student. Please try again.", true);
     } finally {
       setLoadingSubmit(false);
     }
