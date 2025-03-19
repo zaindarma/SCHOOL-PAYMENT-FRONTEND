@@ -88,6 +88,27 @@ const Dashboard = ({ children }) => {
                 onClick={() => logout}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
+                <Icons.PhotoMerge />
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  School year
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => router.push("/main")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Main website
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => logout}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
               </a>
             </li>
