@@ -12,7 +12,7 @@ import {
 } from "@/services/userService";
 import React, { useState } from "react";
 
-const DashboardUser = ({ token }) => {
+const DashboardUser = () => {
   const [page, setPage] = useState(0);
   const [role, setRole] = useState("");
   const {
@@ -98,7 +98,6 @@ const DashboardUser = ({ token }) => {
 
   return (
     <div>
-      {/* Student List */}
       <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
         <div className="p-4 border-b dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
           <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">

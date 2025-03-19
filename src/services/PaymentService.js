@@ -3,7 +3,13 @@ import axios from "axios";
 const API_URL = `${process.env.NEXT_PUBLIC_API}/payments`;
 
 // Fungsi untuk mengambil pembayaran dengan filter, pencarian, & pagination
-export const getFilteredPayments = async ({ page = 0, size = 5, paymentStatus = "", studentName = "", paymentName = "" }) => {
+export const getFilteredPayments = async ({
+  page = 0,
+  size = 5,
+  paymentStatus = "",
+  studentName = "",
+  paymentName = "",
+}) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -18,7 +24,7 @@ export const getFilteredPayments = async ({ page = 0, size = 5, paymentStatus = 
     if (studentName) params.append("studentName", studentName); // Tambahkan search ke query params
     if (paymentName) params.append("paymentName", paymentName);
 
-    const response = await axios.get(`${API_URL}?${params.toString()}`, {
+    const response = await axios.get(`${API_URL}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
