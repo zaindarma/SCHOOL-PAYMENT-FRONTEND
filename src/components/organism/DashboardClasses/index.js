@@ -7,7 +7,7 @@ import { useToast } from "@/context/ToastContext";
 import { useClasses } from "@/hooks/useClasses";
 import { getToken } from "@/services/auth";
 import { createClasses, deleteClasses, getClass, updateClasses } from "@/services/classesService";
-import { getAllSchoolYear } from "@/services/SchoolYearService";
+import { getSchoolYears } from "@/services/SchoolYearService";
 import React, { useEffect, useState } from "react";
 
 const DashboardClasses = () => {
@@ -49,9 +49,12 @@ const DashboardClasses = () => {
   useEffect(() => {
     const fetchSchoolYears = async () => {
       try {
-        const data = await getAllSchoolYear(getToken());
-        setSchoolYears(data.data);
+        const data = await getSchoolYears(0, 1000);
+
+        setSchoolYears(data?.data?.content);
       } catch (err) {
+        console.log(err);
+
         showToast("Failed to fetch school years");
       }
     };

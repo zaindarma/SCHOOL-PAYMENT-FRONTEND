@@ -52,7 +52,7 @@ const Dashboard = ({ children }) => {
               { route: "/admin/payment-type", label: "Payment-Type", icon: <Icons.Wallet /> },
               { route: "/admin/classes", label: "Classes", icon: <Icons.School /> },
               { route: "/admin/school-year", label: "School Year", icon: <Icons.PhotoMerge /> },
-              { route: "/main", label: "Main website", icon: null },
+              { route: "/main", label: "Main website", icon: <Icons.Home /> },
             ].map(({ route, label, icon }) => (
               <li key={route}>
                 <a
@@ -71,8 +71,9 @@ const Dashboard = ({ children }) => {
             <li>
               <a
                 onClick={() => logout()}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
+                className="flex items-center p-2 text-gray-900 rounded-lg bg-red-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
               >
+                <Icons.Logout />
                 <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
               </a>
             </li>

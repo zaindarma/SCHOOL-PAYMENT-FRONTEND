@@ -154,7 +154,7 @@ const SchoolYearList = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300 text-sm">
-            {schoolYears.map((year, index) => (
+            {schoolYears?.map((year, index) => (
               <tr
                 key={year.schoolYearId}
                 className={`border-b ${

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API}/school-years`;
 
-export const getSchoolYears = async (page) => {
+export const getSchoolYears = async (page = 0, size = 10) => {
   const token = localStorage.getItem("token");
   const response = await axios.get(`${API_URL}/all`, {
     headers: {
@@ -10,7 +10,7 @@ export const getSchoolYears = async (page) => {
     },
     params: {
       page: page,
-      size: 10,
+      size: size,
     },
   });
   return response.data.data;
