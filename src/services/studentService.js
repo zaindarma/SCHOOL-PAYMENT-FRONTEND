@@ -10,7 +10,6 @@ export async function getAllStudent(page = 0, size = 10, token) {
         },
       }
     );
-
     return response.data;
   } catch (err) {
     console.log("Failed to fetch student");
@@ -154,3 +153,18 @@ export async function softDeleteStudent(id, token) {
     return err;
   }
 }
+
+export const getStudentById = async (studentId) => {
+  try {
+    const token = localStorage.getItem("token"); // If authentication is needed
+    const response = await axios.get(`${api}/students/${studentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add this if using authentication
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+    throw error;
+  }
+};
