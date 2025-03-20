@@ -98,11 +98,9 @@ const DashboardUser = () => {
 
   return (
     <div>
-      <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
-        <div className="p-4 border-b dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
-          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
-            Student List
-          </h3>
+      <div className="bg-white px-5 mx-5 shadow-md rounded-lg overflow-hidden">
+        <div className="p-4 border-b  flex flex-col md:flex-row md:items-center md:justify-between">
+          <h3 className="text-lg font-semibold text-gray-700 ">User List</h3>
           <RoleBar role={role} setRole={setRole} />
         </div>
         <UserTableRow

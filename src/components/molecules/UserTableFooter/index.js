@@ -10,8 +10,8 @@ const UserTableFooter = ({
   toggleModal,
 }) => {
   return (
-    <div className="p-4 border-b dark:border-gray-700 flex flex-col justify-center items-center md:flex-row md:items-center md:justify-between gap-2">
-      <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+    <div className="p-4 border-b iborder-gray-700 flex flex-col justify-center items-center md:flex-row md:items-center md:justify-between gap-2">
+      <h3 className="text-lg font-semibold text-gray-700 itext-gray-300">
         Total Users:{" "}
         {loading ? (
           <span className="font-bold text-gray-400">...</span>

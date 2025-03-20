@@ -18,7 +18,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       </button>
 
       {/* Page Numbers */}
-      <span className="text-gray-700 dark:text-gray-300 font-medium">
+      <span className="text-gray-700  font-medium">
         {currentPage + 1} of {totalPages}
       </span>
 

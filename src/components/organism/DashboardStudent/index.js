@@ -65,7 +65,13 @@ const DashboardStudent = ({ token }) => {
     });
   };
   // Fetch students dynamically based on filters
-  const { data, loading, error: fetchError, totalPages, currentPage } = useStudents(page, 10, filters, token);
+  const {
+    data,
+    loading,
+    error: fetchError,
+    totalPages,
+    currentPage,
+  } = useStudents(page, 10, filters, token);
   const generateNIS = (year = new Date().getFullYear().toString().slice(2)) => {
     const randomDigits = Math.floor(100000 + Math.random() * 900000); // 6 random digits
     return `${year}${randomDigits}`;
@@ -190,11 +196,15 @@ const DashboardStudent = ({ token }) => {
   return (
     <div>
       {/* Student List */}
-      <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
-        <div className="p-4 border-b dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
-          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">Student List</h3>
+      <div className="bg-white px-5 mx-5 shadow-md rounded-lg overflow-hidden">
+        <div className="p-4 border-b  flex flex-col md:flex-row md:items-center md:justify-between">
+          <h3 className="text-lg font-semibold text-gray-700 ">Student List</h3>
 
-          <SearchBar handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} search={search} />
+          <SearchBar
+            handleSearchChange={handleSearchChange}
+            handleSearchSubmit={handleSearchSubmit}
+            search={search}
+          />
         </div>
         <StudentTableRow
           data={data}

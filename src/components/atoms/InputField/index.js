@@ -9,7 +9,9 @@ const InputField = ({
   readOnly = false,
 }) => (
   <div>
-    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+    <label className="block text-sm font-medium text-gray-700 itext-gray-300">
+      {label}
+    </label>
     <input
       type={type}
       name={name}
@@ -17,7 +19,7 @@ const InputField = ({
       onChange={onChange}
       required={required}
       placeholder={placeholder}
-      className="w-full p-2 border rounded dark:bg-gray-800 dark:text-white"
+      className="w-full p-2 border rounded ibg-gray-800 itext-white"
       readOnly={readOnly}
     />
   </div>
