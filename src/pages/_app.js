@@ -12,12 +12,12 @@ const merriweather = Merriweather({
 
 export default function App({ Component, pageProps }) {
   return (
-    <RouteGuard>
-      <ToastProvider>
+    <ToastProvider>
+      <RouteGuard>
         <main className={merriweather.className}>
           <Component {...pageProps} />
         </main>
-      </ToastProvider>
-    </RouteGuard>
+      </RouteGuard>
+    </ToastProvider>
   );
 }
