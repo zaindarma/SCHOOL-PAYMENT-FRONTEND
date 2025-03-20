@@ -2,6 +2,7 @@ import ClassesForm from "@/components/molecules/ClassesForm";
 import ClassTableFooter from "@/components/molecules/ClassTableFooter";
 import ClassTableRow from "@/components/molecules/ClassTableRow";
 import ConfirmationModal from "@/components/molecules/ConfirmationModal";
+import SearchBar from "@/components/molecules/SearchBar/inedex";
 import { useToast } from "@/context/ToastContext";
 import { useClasses } from "@/hooks/useClasses";
 import { getToken } from "@/services/auth";
@@ -26,6 +27,8 @@ const DashboardClasses = () => {
   const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [classId, setClassId] = useState(null);
   const [question, setQuestion] = useState("Are you sure?");
+  const [search, setSearch] = useState("");
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
     if (isModalOpen) {
@@ -126,12 +129,20 @@ const DashboardClasses = () => {
     }
   };
   const togglePrompt = () => setIsPromptOpen(!isPromptOpen);
+  const handleSearchChange = (event) => setSearch(event.target.value);
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    setSearchQuery(search);
+    setPage(0); // Reset to first page
+  };
   return (
     <div>
       <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
         <div className="p-4 border-b dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
           <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">Classes List</h3>
+          <SearchBar handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} search={search} />
         </div>
+
         <ClassTableRow
           data={data}
           loading={loading}

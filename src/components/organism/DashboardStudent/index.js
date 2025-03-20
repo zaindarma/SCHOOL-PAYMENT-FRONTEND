@@ -75,8 +75,8 @@ const DashboardStudent = ({ token }) => {
   const handleSearchChange = (event) => setSearch(event.target.value);
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    setFilters({ search }); // Apply search
-    setPage(0); // Reset to first page
+    setFilters({ search });
+    setPage(0);
   };
 
   // Handle modal open/close
