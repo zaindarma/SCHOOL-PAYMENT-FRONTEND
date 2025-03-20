@@ -42,15 +42,15 @@ const PaymentTypePage = () => {
 
   return (
     <Dashboard>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Daftar Jenis Pembayaran</h1>
+      <div className="container mx-auto p-4 bg-white dark:bg-gray-900 min-h-screen">
+        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Daftar Jenis Pembayaran</h1>
 
         {/* 🔹 Input Search */}
-        <input type="text" placeholder="Cari jenis pembayaran..." value={filters.search} onChange={handleSearchChange} className="border p-2 mb-4 w-full" />
+        <input type="text" placeholder="Cari jenis pembayaran..." value={filters.search} onChange={handleSearchChange} className="border p-2 mb-4 w-full bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-700" />
 
         {/* 🔹 Form Tambah / Edit */}
         <div className="mb-4 flex space-x-2">
-          <input type="text" placeholder="Nama Jenis Pembayaran..." value={newName} onChange={(e) => setNewName(e.target.value)} className="border p-2 w-full" />
+          <input type="text" placeholder="Nama Jenis Pembayaran..." value={newName} onChange={(e) => setNewName(e.target.value)} className="border p-2 w-full bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-700" />
           {editId ? (
             <button className="bg-yellow-500 text-white p-2" onClick={handleUpdatePaymentType}>
               Update
@@ -62,24 +62,24 @@ const PaymentTypePage = () => {
           )}
         </div>
 
-        {loading && <p>Loading...</p>}
+        {loading && <p className="text-gray-900 dark:text-white">Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
 
         {paymentTypes.length > 0 ? (
-          <table className="w-full border-collapse border">
+          <table className="w-full border-collapse border dark:border-gray-700">
             <thead>
-              <tr className="bg-gray-200">
-                <th className="border p-2">ID</th>
-                <th className="border p-2">Nama Jenis Pembayaran</th>
-                <th className="border p-2">Aksi</th>
+              <tr className="bg-gray-200 dark:bg-gray-800">
+                <th className="border p-2 dark:border-gray-700 text-gray-900 dark:text-white">ID</th>
+                <th className="border p-2 dark:border-gray-700 text-gray-900 dark:text-white">Nama Jenis Pembayaran</th>
+                <th className="border p-2 dark:border-gray-700 text-gray-900 dark:text-white">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {paymentTypes.map((type) => (
                 <tr key={type.paymentTypeId} className="text-center">
-                  <td className="border p-2">{type.paymentTypeId}</td>
-                  <td className="border p-2">{type.paymentTypeName}</td>
-                  <td className="border p-2 space-x-2">
+                  <td className="border p-2 dark:border-gray-700 text-gray-900 dark:text-white">{type.paymentTypeId}</td>
+                  <td className="border p-2 dark:border-gray-700 text-gray-900 dark:text-white">{type.paymentTypeName}</td>
+                  <td className="border p-2 space-x-2 dark:border-gray-700">
                     <button
                       className="bg-yellow-500 text-white p-2"
                       onClick={() => {
@@ -98,20 +98,28 @@ const PaymentTypePage = () => {
             </tbody>
           </table>
         ) : (
-          <p className="text-center text-gray-500">Tidak ada data jenis pembayaran.</p>
+          <p className="text-center text-gray-500 dark:text-gray-400">Tidak ada data jenis pembayaran.</p>
         )}
 
         {/* Pagination */}
         <div className="flex justify-center items-center mt-4 space-x-2">
-          <button className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50" onClick={() => handlePageChange(filters.page - 1)} disabled={filters.page === 0}>
+          <button
+            className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white disabled:opacity-50"
+            onClick={() => handlePageChange(filters.page - 1)}
+            disabled={filters.page === 0}
+          >
             ⬅️ Prev
           </button>
 
-          <span className="text-lg font-semibold">
+          <span className="text-lg font-semibold text-gray-900 dark:text-white">
             Halaman {pagination.page + 1} dari {pagination.totalPages}
           </span>
 
-          <button className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50" onClick={() => handlePageChange(filters.page + 1)} disabled={filters.page >= pagination.totalPages - 1}>
+          <button
+            className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white disabled:opacity-50"
+            onClick={() => handlePageChange(filters.page + 1)}
+            disabled={filters.page >= pagination.totalPages - 1}
+          >
             Next ➡️
           </button>
         </div>

@@ -54,7 +54,7 @@ const SchoolYearList = () => {
 
   return (
     <Dashboard>
-      <div className="overflow-x-auto p-6 bg-white shadow-lg rounded-lg">
+      <div className="overflow-x-auto p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
         <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition mb-4">
           + Create School Year
         </button>
@@ -62,20 +62,41 @@ const SchoolYearList = () => {
         {/* Create/Edit Modal */}
         {(showCreateModal || showEditModal) && (
           <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-xl w-1/3 transition transform scale-100">
-              <h3 className="text-xl font-semibold mb-4 text-gray-700">{showCreateModal ? "Create School Year" : "Edit School Year"}</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-1/3 transition transform scale-100">
+              <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">{showCreateModal ? "Create School Year" : "Edit School Year"}</h3>
               <form onSubmit={showCreateModal ? handleCreateSubmit : handleUpdateSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-gray-600">School Year</label>
-                  <input type="text" name="schoolYear" value={editSchoolYear.schoolYear} onChange={handleFormChange} className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300" required />
+                  <label className="block text-gray-600 dark:text-gray-300">School Year</label>
+                  <input
+                    type="text"
+                    name="schoolYear"
+                    value={editSchoolYear.schoolYear}
+                    onChange={handleFormChange}
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    required
+                  />
                 </div>
                 <div>
-                  <label className="block text-gray-600">Start Date</label>
-                  <input type="date" name="startDate" value={editSchoolYear.startDate} onChange={handleFormChange} className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300" required />
+                  <label className="block text-gray-600 dark:text-gray-300">Start Date</label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={editSchoolYear.startDate}
+                    onChange={handleFormChange}
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    required
+                  />
                 </div>
                 <div>
-                  <label className="block text-gray-600">End Date</label>
-                  <input type="date" name="endDate" value={editSchoolYear.endDate} onChange={handleFormChange} className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300" required />
+                  <label className="block text-gray-600 dark:text-gray-300">End Date</label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={editSchoolYear.endDate}
+                    onChange={handleFormChange}
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    required
+                  />
                 </div>
                 <div className="flex justify-between">
                   <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
@@ -86,7 +107,12 @@ const SchoolYearList = () => {
                     onClick={() => {
                       setShowCreateModal(false);
                       setShowEditModal(false);
-                      setEditSchoolYear({ id: "", schoolYear: "", startDate: "", endDate: "" });
+                      setEditSchoolYear({
+                        id: "",
+                        schoolYear: "",
+                        startDate: "",
+                        endDate: "",
+                      });
                     }}
                     className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                   >
@@ -99,18 +125,18 @@ const SchoolYearList = () => {
         )}
 
         {/* Tabel dengan tampilan modern */}
-        <table className="w-full border-collapse bg-white shadow-md rounded-lg">
+        <table className="w-full border-collapse bg-white dark:bg-gray-800 shadow-md rounded-lg">
           <thead>
-            <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+            <tr className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">School Year</th>
               <th className="py-3 px-6 text-left">Start Date</th>
               <th className="py-3 px-6 text-left">End Date</th>
               <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700 text-sm">
+          <tbody className="text-gray-700 dark:text-gray-300 text-sm">
             {schoolYears.map((year, index) => (
-              <tr key={year.schoolYearId} className={`border-b ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition`}>
+              <tr key={year.schoolYearId} className={`border-b ${index % 2 === 0 ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700"} hover:bg-gray-100 dark:hover:bg-gray-600 transition`}>
                 <td className="py-3 px-6">{year.schoolYear}</td>
                 <td className="py-3 px-6">{year.startDate}</td>
                 <td className="py-3 px-6">{year.endDate}</td>
