@@ -1,6 +1,7 @@
 import RouteGuard from "@/services/RouteGuard";
 import "@/styles/globals.css";
 import { Merriweather } from "next/font/google";
+import { ToastProvider } from "@/context/ToastContext";
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -11,10 +12,12 @@ const merriweather = Merriweather({
 
 export default function App({ Component, pageProps }) {
   return (
-    <RouteGuard>
-      <main className={merriweather.className}>
-        <Component {...pageProps} />
-      </main>
-    </RouteGuard>
+    <ToastProvider>
+      <RouteGuard>
+        <main className={merriweather.className}>
+          <Component {...pageProps} />
+        </main>
+      </RouteGuard>
+    </ToastProvider>
   );
 }

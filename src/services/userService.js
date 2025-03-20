@@ -7,6 +7,7 @@ export async function getAllUser(page = 0, size = 10, token) {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return response.data;
   } catch (err) {
     console.log("Failed to fetch user");
@@ -79,11 +80,15 @@ export async function updateRole(id, role, token) {
 
 export async function softDeleteUser(id, token) {
   try {
-    const response = await axios.put(`${api}/users/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.put(
+      `${api}/users/delete/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     console.log("Failed delete user");
@@ -105,11 +110,7 @@ export async function hardDeleteUser(id, token) {
   }
 }
 
-export async function updateUser(
-  id,
-  { email, password, profilePicture, confirmPassword },
-  token
-) {
+export async function updateUser({ email, password, profilePicture, confirmPassword }, token) {
   try {
     const payload = {};
 
@@ -118,7 +119,7 @@ export async function updateUser(
     if (profilePicture) payload.profilePicture = profilePicture;
     if (confirmPassword) payload.confirmPassword = confirmPassword;
 
-    const response = await axios.put(`${api}/users/${id}`, payload, {
+    const response = await axios.put(`${api}/users/`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

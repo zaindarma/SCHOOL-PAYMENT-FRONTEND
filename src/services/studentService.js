@@ -17,6 +17,54 @@ export async function getAllStudent(page = 0, size = 10, token) {
   }
 }
 
+export async function getStudentFilter(
+  page = 0,
+  size = 10,
+  filters = {},
+  token
+) {
+  try {
+    const params = new URLSearchParams();
+
+    // Add filters only if they exist
+    if (filters.search) params.append("search", filters.search);
+    if (filters.startDate) params.append("startDate", filters.startDate);
+    if (filters.endDate) params.append("endDate", filters.endDate);
+    if (filters.sort) params.append("sort", filters.sort);
+
+    // Add pagination parameters
+    params.append("page", page);
+    params.append("size", size);
+
+    const response = await axios.get(
+      `${api}/students/search?${params.toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    response.data.data = response.data.content;
+    return response.data;
+  } catch (err) {
+    console.log("Failed to fetch student:", err);
+    return err;
+  }
+}
+
+export async function getStudentById(id, token) {
+  try {
+    const response = await axios.get(`${api}/students/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log("Failed to fetch student");
+    return err;
+  }
+}
 export async function createStudent(
   { nis, name, classId, birthdate, address, phoneNumber },
   token
@@ -62,6 +110,8 @@ export async function updateStudent(
     });
     return response.data;
   } catch (err) {
+    console.log(err);
+
     console.log("Failed to update student");
     return err;
   }
@@ -82,16 +132,24 @@ export async function deleteStudent(id, token) {
 }
 
 //soft delete
+
 export async function softDeleteStudent(id, token) {
   try {
-    const response = await axios.put(`${api}/students/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.put(
+      `${api}/students/delete/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
-    console.log("Failed to delete student");
+    console.error(
+      "Failed to delete student",
+      err.response?.data || err.message
+    );
     return err;
   }
 }
