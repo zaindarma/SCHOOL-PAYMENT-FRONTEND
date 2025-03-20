@@ -6,7 +6,7 @@ import { logout } from "@/services/auth";
 
 const Dashboard = ({ children }) => {
   const router = useRouter();
-  const path = router.asPath.split("/").filter(Boolean).pop().toUpperCase();
+  const currentPage = router.asPath.split("/").filter(Boolean).pop().toLowerCase();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -40,91 +40,38 @@ const Dashboard = ({ children }) => {
           <ul className="space-y-2 font-medium">
             <li>
               <div className="flex items-center justify-center p-2 text-gray-900 dark:text-white font-bold">
-                <p className="ms-3">{path}</p>
+                <p className="ms-3">
+                  MIAW SCHOOL <span className="text-blue-700">ADMIN</span>
+                </p>
               </div>
             </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/dashboard")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer"
-              >
-                <Icons.Chart />
-                <span className="ms-3">Dashboard</span>
-              </a>
-            </li>
-
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/users")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.AccountBox />
-                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/student")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.Badge />
-                <span className="flex-1 ms-3 whitespace-nowrap">Student</span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/payment")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.Wallet />
-                <span className="flex-1 ms-3 whitespace-nowrap">Payment</span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/payment-type")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.Wallet />
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Payment-Type
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/classes")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.School />
-                <span className="flex-1 ms-3 whitespace-nowrap">Classes</span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/admin/school-year")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <Icons.PhotoMerge />
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  School year
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/main")}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Main website
-                </span>
-              </a>
-            </li>
+            {[
+              { route: "/admin/users", label: "Users", icon: <Icons.AccountBox /> },
+              { route: "/admin/student", label: "Student", icon: <Icons.Badge /> },
+              { route: "/admin/payment", label: "Payment", icon: <Icons.Wallet /> },
+              { route: "/admin/payment-type", label: "Payment-Type", icon: <Icons.Wallet /> },
+              { route: "/admin/classes", label: "Classes", icon: <Icons.School /> },
+              { route: "/admin/school-year", label: "School Year", icon: <Icons.PhotoMerge /> },
+              { route: "/main", label: "Main website", icon: null },
+            ].map(({ route, label, icon }) => (
+              <li key={route}>
+                <a
+                  onClick={() => handleNavigation(route)}
+                  className={`flex items-center p-2 rounded-lg cursor-pointer group ${
+                    currentPage === route.split("/").pop()
+                      ? "bg-gray-200 dark:bg-gray-700"
+                      : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  {icon && icon}
+                  <span className="flex-1 ms-3 whitespace-nowrap">{label}</span>
+                </a>
+              </li>
+            ))}
             <li>
               <a
                 onClick={() => logout()}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
               </a>
@@ -134,9 +81,7 @@ const Dashboard = ({ children }) => {
       </aside>
 
       <div className="p-4 sm:ml-64">
-        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">
-          {children}
-        </div>
+        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">{children}</div>
       </div>
     </>
   );
