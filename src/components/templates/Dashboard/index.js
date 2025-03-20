@@ -6,7 +6,11 @@ import { logout } from "@/services/auth";
 
 const Dashboard = ({ children }) => {
   const router = useRouter();
-  const currentPage = router.asPath.split("/").filter(Boolean).pop().toLowerCase();
+  const currentPage = router.asPath
+    .split("/")
+    .filter(Boolean)
+    .pop()
+    .toLowerCase();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -46,20 +50,44 @@ const Dashboard = ({ children }) => {
               </div>
             </li>
             {[
-              { route: "/admin/users", label: "Users", icon: <Icons.AccountBox /> },
-              { route: "/admin/student", label: "Student", icon: <Icons.Badge /> },
-              { route: "/admin/payment", label: "Payment", icon: <Icons.Wallet /> },
-              { route: "/admin/payment-type", label: "Payment-Type", icon: <Icons.Wallet /> },
-              { route: "/admin/classes", label: "Classes", icon: <Icons.School /> },
-              { route: "/admin/school-year", label: "School Year", icon: <Icons.PhotoMerge /> },
-              { route: "/main", label: "Main website", icon: <Icons.Home /> },
+              {
+                route: "/admin/users",
+                label: "Users",
+                icon: <Icons.AccountBox />,
+              },
+              {
+                route: "/admin/student",
+                label: "Student",
+                icon: <Icons.Badge />,
+              },
+              {
+                route: "/admin/payment",
+                label: "Payment",
+                icon: <Icons.Wallet />,
+              },
+              {
+                route: "/admin/payment-type",
+                label: "Payment-Type",
+                icon: <Icons.Wallet />,
+              },
+              {
+                route: "/admin/classes",
+                label: "Classes",
+                icon: <Icons.School />,
+              },
+              {
+                route: "/admin/school-year",
+                label: "School Year",
+                icon: <Icons.PhotoMerge />,
+              },
+              { route: "/main", label: "Main website", icon: null },
             ].map(({ route, label, icon }) => (
               <li key={route}>
                 <a
                   onClick={() => handleNavigation(route)}
                   className={`flex items-center p-2 rounded-lg cursor-pointer group ${
                     currentPage === route.split("/").pop()
-                      ? "text-blue-700 bg-gray-200 dark:bg-gray-700"
+                      ? "bg-gray-200 ibg-gray-700"
                       : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}
                 >
@@ -82,7 +110,9 @@ const Dashboard = ({ children }) => {
       </aside>
 
       <div className="p-4 sm:ml-64">
-        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">{children}</div>
+        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">
+          {children}
+        </div>
       </div>
     </>
   );

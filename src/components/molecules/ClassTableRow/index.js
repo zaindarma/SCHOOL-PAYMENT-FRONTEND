@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icons from "@/components/atoms/Icons";
 
-const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }) => {
+const ClassTableRow = ({
+  data,
+  loading,
+  fetchError,
+  handleUpdate,
+  handleDelete,
+}) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [dropdownPosition, setDropdownPosition] = useState({
     top: 0,
@@ -36,38 +42,49 @@ const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }
   return (
     <>
       {loading ? (
-        <p className="text-center p-4 text-gray-500 dark:text-gray-400">Loading classes...</p>
+        <p className="text-center p-4 text-gray-500 itext-gray-400">
+          Loading classes...
+        </p>
       ) : fetchError ? (
         <p className="text-center p-4 text-red-500">{fetchError}</p>
       ) : (
         <div className="overflow-x-auto relative">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-100 dark:bg-gray-800">
+          <table className="min-w-full divide-y divide-gray-200 idivide-gray-700">
+            <thead className="bg-gray-100 ibg-gray-800">
               <tr>
-                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">
+                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 itext-gray-300 uppercase">
                   Class ID
                 </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">
+                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 itext-gray-300 uppercase">
                   Class Name
                 </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">
+                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 itext-gray-300 uppercase">
                   School Year
                 </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">
+                <th className="px-6 py-1 text-left text-xs font-medium text-gray-500 itext-gray-300 uppercase">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-white ibg-gray-900 divide-y divide-gray-200 idivide-gray-700">
               {data?.data?.content?.length > 0 ? (
                 data?.data?.content?.map((classItem) => (
-                  <tr key={classItem.classesId} className="hover:bg-gray-100 dark:hover:bg-gray-800">
-                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 dark:text-gray-300">{classItem.classesId}</td>
-                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 dark:text-gray-300">{classItem.classesName}</td>
-                    <td className="px-1 py-1 text-sm text-gray-500 dark:text-gray-400">{classItem.schoolYearId}</td>
+                  <tr
+                    key={classItem.classesId}
+                    className="hover:bg-gray-100 ihover:bg-gray-800"
+                  >
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">
+                      {classItem.classesId}
+                    </td>
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">
+                      {classItem.classesName}
+                    </td>
+                    <td className="px-1 py-1 text-sm text-gray-500 itext-gray-400">
+                      {classItem.schoolYearId}
+                    </td>
                     <td className="px-1 py-1 text-center relative">
                       <button
-                        className="px-1 text-gray-500 dark:text-gray-300 hover:bg-gray-700 dark:hover:text-gray-400"
+                        className="px-1 text-gray-500 itext-gray-300 hover:bg-gray-700 ihover:text-gray-400"
                         onClick={(e) => toggleDropdown(classItem.classesId, e)}
                       >
                         <Icons.MoreVert />
@@ -77,7 +94,10 @@ const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="text-center py-4 text-gray-500 dark:text-gray-400">
+                  <td
+                    colSpan="4"
+                    className="text-center py-4 text-gray-500 itext-gray-400"
+                  >
                     No classes found.
                   </td>
                 </tr>
@@ -90,14 +110,14 @@ const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }
       {openDropdown && (
         <div
           ref={dropdownRef}
-          className="absolute z-[9999] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg"
+          className="absolute z-[9999] bg-white ibg-gray-800 border border-gray-200 iborder-gray-700 shadow-lg rounded-lg"
           style={{
             top: `${dropdownPosition.top}px`,
             right: `${dropdownPosition.right}px`,
           }}
         >
           <button
-            className="flex text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="flex text-left px-4 py-2 text-sm text-gray-700 itext-gray-300 hover:bg-gray-100 ihover:bg-gray-700"
             onClick={() => {
               handleUpdate(openDropdown);
               setOpenDropdown(null);
@@ -106,7 +126,7 @@ const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }
             Update
           </button>
           <button
-            className="flex text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="flex text-left px-4 py-2 text-sm text-red-600 itext-red-400 hover:bg-gray-100 ihover:bg-gray-700"
             onClick={() => {
               handleDelete(openDropdown);
               setOpenDropdown(null);

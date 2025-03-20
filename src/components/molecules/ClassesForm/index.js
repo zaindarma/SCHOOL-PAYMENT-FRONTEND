@@ -15,8 +15,8 @@ const ClassesForm = ({
   <>
     {isModalOpen && (
       <div className="fixed inset-0 text-white flex justify-center items-center z-50">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full border-2 border-gray-500">
-          <h2 className="text-xl font-bold mb-4 text-gray-700 dark:text-gray-300">
+        <div className="bg-white ibg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full border-2 border-gray-500">
+          <h2 className="text-xl font-bold mb-4 text-gray-700 itext-gray-300">
             {isEditing ? "Update Class" : "Add New Class"}
           </h2>
 
@@ -24,7 +24,13 @@ const ClassesForm = ({
 
           <form onSubmit={handleSubmit} className="space-y-3">
             {/* Hidden ID Field for Editing */}
-            <input name="classesId" type="number" value={formData.classesId} hidden readOnly />
+            <input
+              name="classesId"
+              type="number"
+              value={formData.classesId}
+              hidden
+              readOnly
+            />
 
             {/* Class Name */}
             <InputField
@@ -54,11 +60,24 @@ const ClassesForm = ({
 
             {/* Buttons */}
             <div className="flex justify-end space-x-2">
-              <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={toggleModal}>
+              <button
+                type="button"
+                className="px-4 py-2 bg-gray-400 text-white rounded"
+                onClick={toggleModal}
+              >
                 Cancel
               </button>
-              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                {loadingSubmit ? (isEditing ? "Updating..." : "Adding...") : isEditing ? "Update" : "Add"}
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                {loadingSubmit
+                  ? isEditing
+                    ? "Updating..."
+                    : "Adding..."
+                  : isEditing
+                  ? "Update"
+                  : "Add"}
               </button>
             </div>
           </form>
