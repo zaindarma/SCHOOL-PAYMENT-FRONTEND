@@ -110,23 +110,24 @@ export async function hardDeleteUser(id, token) {
   }
 }
 
-export async function updateUser({ email, password, profilePicture, confirmPassword }, token) {
+export async function updateUser({ email, password, confirmPassword }, token) {
   try {
-    const payload = {};
+    const formData = new FormData();
 
-    if (email) payload.email = email;
-    if (password) payload.password = password;
-    if (profilePicture) payload.profilePicture = profilePicture;
-    if (confirmPassword) payload.confirmPassword = confirmPassword;
+    if (email) formData.append("email", email);
+    if (password) formData.append("password", password);
+    if (confirmPassword) formData.append("confirmPassword", confirmPassword);
 
-    const response = await axios.put(`${api}/users/`, payload, {
+    const response = await axios.put(`${api}/users`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data", // Important for FormData
       },
     });
+
     return response.data;
   } catch (err) {
-    console.log("Failed to update user");
+    console.log("Failed to update user", err);
     return err;
   }
 }
