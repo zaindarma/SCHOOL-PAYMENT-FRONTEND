@@ -1,7 +1,7 @@
 import { useState } from "react";
 import usePayments from "@/hooks/usePayments";
 import Dashboard from "@/components/templates/Dashboard";
-import { updatePaymentStatus } from "@/services/PaymentService";
+import { updatePaymentStatus } from "@/services/paymentService";
 
 const PaymentPage = () => {
   const [filters, setFilters] = useState({
@@ -58,10 +58,22 @@ const PaymentPage = () => {
         <h1 className="text-2xl font-bold mb-4">Daftar Pembayaran</h1>
         <div className="flex flex-wrap justify-between items-center mb-4">
           {/* 🔹 Search Nama Siswa */}
-          <input type="text" placeholder="Cari Nama Siswa..." value={filters.studentName} onChange={handleSearchChange} className="border p-2 rounded w-1/3" />
+          <input
+            type="text"
+            placeholder="Cari Nama Siswa..."
+            value={filters.studentName}
+            onChange={handleSearchChange}
+            className="border p-2 rounded w-1/3"
+          />
 
           {/* 🔹 Search Jenis Pembayaran */}
-          <input type="text" placeholder="Cari Jenis Pembayaran..." value={filters.paymentName} onChange={handlePaymentSearchChange} className="border p-2 rounded w-1/3" />
+          <input
+            type="text"
+            placeholder="Cari Jenis Pembayaran..."
+            value={filters.paymentName}
+            onChange={handlePaymentSearchChange}
+            className="border p-2 rounded w-1/3"
+          />
 
           {/* 🔹 Filter Status */}
           <select className="border p-2 rounded w-1/4" value={filters.paymentStatus} onChange={handleFilterChange}>
@@ -93,20 +105,40 @@ const PaymentPage = () => {
                   <td className="py-3 px-6 text-left whitespace-nowrap">{payment.studentName}</td>
                   <td className="py-3 px-6 text-left">{payment.paymentTypeName}</td>
                   <td className="py-3 px-6 text-center">
-                    <span className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${payment.paymentStatus === "COMPLETED" ? "bg-green-500" : payment.paymentStatus === "FAILED" ? "bg-red-500" : "bg-blue-500"}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${
+                        payment.paymentStatus === "COMPLETED"
+                          ? "bg-green-500"
+                          : payment.paymentStatus === "FAILED"
+                          ? "bg-red-500"
+                          : "bg-blue-500"
+                      }`}
+                    >
                       {payment.paymentStatus}
                     </span>
                   </td>
                   <td className="py-3 px-6 text-center">Rp {payment.amount.toLocaleString()}</td>
                   <td className="py-3 px-6 text-center">
                     <div className="flex justify-center">
-                      <button className="bg-green-500 text-white px-3 py-1 rounded-full text-xs mx-1" onClick={() => handleUpdateStatus(payment.paymentId, "COMPLETED")} disabled={loadingUpdate}>
+                      <button
+                        className="bg-green-500 text-white px-3 py-1 rounded-full text-xs mx-1"
+                        onClick={() => handleUpdateStatus(payment.paymentId, "COMPLETED")}
+                        disabled={loadingUpdate}
+                      >
                         ✅ Selesaikan
                       </button>
-                      <button className="bg-red-500 text-white px-3 py-1 rounded-full text-xs mx-1" onClick={() => handleUpdateStatus(payment.paymentId, "FAILED")} disabled={loadingUpdate}>
+                      <button
+                        className="bg-red-500 text-white px-3 py-1 rounded-full text-xs mx-1"
+                        onClick={() => handleUpdateStatus(payment.paymentId, "FAILED")}
+                        disabled={loadingUpdate}
+                      >
                         ❌ Gagal
                       </button>
-                      <button className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs mx-1" onClick={() => handleUpdateStatus(payment.paymentId, "REFUNDED")} disabled={loadingUpdate}>
+                      <button
+                        className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs mx-1"
+                        onClick={() => handleUpdateStatus(payment.paymentId, "REFUNDED")}
+                        disabled={loadingUpdate}
+                      >
                         🔄 Refund
                       </button>
                     </div>
@@ -121,7 +153,11 @@ const PaymentPage = () => {
 
         {/* Pagination */}
         <div className="flex justify-center items-center mt-4 space-x-2">
-          <button className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50" onClick={() => handlePageChange(filters.page - 1)} disabled={filters.page === 0}>
+          <button
+            className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            onClick={() => handlePageChange(filters.page - 1)}
+            disabled={filters.page === 0}
+          >
             ⬅️ Prev
           </button>
 
@@ -129,7 +165,11 @@ const PaymentPage = () => {
             Halaman {pagination.page + 1} dari {pagination.totalPages}
           </span>
 
-          <button className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50" onClick={() => handlePageChange(filters.page + 1)} disabled={filters.page >= pagination.totalPages - 1}>
+          <button
+            className="border px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            onClick={() => handlePageChange(filters.page + 1)}
+            disabled={filters.page >= pagination.totalPages - 1}
+          >
             Next ➡️
           </button>
         </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getFilteredPayments } from "@/services/PaymentService";
+import { getFilteredPayments } from "@/services/paymentService";
 
 const usePayments = (initialFilters = { page: 0, size: 10, studentName: "", paymentStatus: "" }) => {
   const [payments, setPayments] = useState([]);

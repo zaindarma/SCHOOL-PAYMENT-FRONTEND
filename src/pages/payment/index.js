@@ -1,6 +1,6 @@
 import NavbarPay from "@/components/organism/NavbarPay";
 import { getToken } from "@/services/auth";
-import { getPayment } from "@/services/PaymentService";
+import { getPayment } from "@/services/paymentService";
 import { getUserById, me } from "@/services/userService";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import CreatePaymentModal from "./CreatePaymentModal";
-import { getStudentById } from "@/services/studentService";
+import { getStudentByIds } from "@/services/studentService";
 import UpdateUserModal from "./UpdateUserModal";
 import UpdateEmailPasswordModal from "./UpdateUserModal";
 
@@ -35,7 +35,8 @@ const PaymentPage = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       const data = await getPayment();
-      setPayments(data);
+      console.log(data);
+      setPayments(Array.isArray(data) ? data : []);
     };
 
     const fetchUsers = async () => {
@@ -73,7 +74,7 @@ const PaymentPage = () => {
   const handlePaymentCreated = () => {};
 
   // Handle filtering payments
-  const filteredPayments = payments.filter((payment) => {
+  const filteredPayments = payments?.filter((payment) => {
     const matchesName = payment.paymentName.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Convert both to uppercase for a case-insensitive match
@@ -123,12 +124,9 @@ const PaymentPage = () => {
                   <h1 className="text-xl font-bold">{user?.name}</h1>
                   <p className="text-gray-700">{user?.role}</p>
                   <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                    <button
-                      onClick={() => setIsUpdateModalOpen(true)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                    >
+                    <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                       Edit Profile
-                    </button>
+                    </a>
                     <button
                       onClick={handleLogout}
                       className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
@@ -278,6 +276,7 @@ const PaymentPage = () => {
         onClose={() => setIsCreateModalOpen(false)}
         onPaymentCreated={handlePaymentCreated}
       />
+      <UpdateUserModal isOpen={isUpdateModalOpen} onClose={() => setIsUpdateModalOpen(false)} user={user} />
     </>
   );
 };
