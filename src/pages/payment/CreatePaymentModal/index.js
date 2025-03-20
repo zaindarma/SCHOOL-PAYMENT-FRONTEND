@@ -1,4 +1,4 @@
-import { createPayment } from "@/services/paymentService";
+import { createPayment } from "@/services/PaymentService";
 import React, { useState } from "react"; // Adjust the path
 
 const CreatePaymentModal = ({ isOpen, onClose, onPaymentCreated }) => {
@@ -108,11 +108,7 @@ const CreatePaymentModal = ({ isOpen, onClose, onPaymentCreated }) => {
             required
           ></textarea>
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-            disabled={loading}
-          >
+          <button type="submit" className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700" disabled={loading}>
             {loading ? "Creating..." : "Create Payment"}
           </button>
         </form>
@@ -120,10 +116,7 @@ const CreatePaymentModal = ({ isOpen, onClose, onPaymentCreated }) => {
         {message && <p className="text-center text-sm mt-2">{message}</p>}
 
         <div className="mt-4 flex justify-end">
-          <button
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-            onClick={onClose}
-          >
+          <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" onClick={onClose}>
             Close
           </button>
         </div>
