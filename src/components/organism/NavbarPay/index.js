@@ -27,33 +27,6 @@ const NavbarPay = ({ onClick }) => {
         <h1 class="text-xl text-white font-bold">PayIND</h1>
       </Link>
 
-      <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
-        <list>
-          <ul class="md:flex items-center justify-between text-base text-white pt-4 md:pt-0">
-            <li>
-              <Link class="md:p-4 py-3 px-0 block" href="#">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link class="md:p-4 py-3 px-0 block" href="#">
-                News
-              </Link>
-            </li>
-            <li>
-              <Link class="md:p-4 py-3 px-0 block" href="/payment">
-                Payment
-              </Link>
-            </li>
-            <li>
-              <Link class="md:p-4 py-3 px-0 block md:mb-0 mb-2" href="#">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </list>
-      </div>
-
       <div>
         {token ? (
           <button
@@ -74,12 +47,12 @@ const NavbarPay = ({ onClick }) => {
                 </Link>
               </li>
               <li>
-                <button
-                  class="md:p-4 py-3 px-0 block bg-[#0D9488] hover:text-blue-600"
-                  onClick={onClick}
+                <Link
+                  class="md:p-4 py-3 px-0 block hover:text-blue-600"
+                  href="/main"
                 >
                   Login
-                </button>
+                </Link>
               </li>
             </ul>
           </list>

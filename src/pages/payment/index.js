@@ -153,6 +153,12 @@ const PaymentPage = () => {
                     >
                       Logout
                     </button>
+                    <Link
+                      href="/main"
+                      className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
+                    >
+                      Back
+                    </Link>
                   </div>
                 </div>
                 <hr className="my-6 border-t border-gray-300" />
