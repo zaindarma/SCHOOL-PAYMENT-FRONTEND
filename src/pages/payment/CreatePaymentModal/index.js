@@ -63,15 +63,19 @@ const CreatePaymentModal = ({ isOpen, onClose, onPaymentCreated }) => {
             className="border p-2 rounded"
             required
           />
-          <input
-            type="text"
+          <select
             name="paymentTypeId"
-            placeholder="Payment Type ID"
             value={formData.paymentTypeId}
             onChange={handleChange}
             className="border p-2 rounded"
             required
-          />
+          >
+            <option value="">Select Payment Type</option>
+            <option value="4">SPP</option>
+            <option value="3">Sports</option>
+            <option value="2">Library</option>
+          </select>
+
           <input
             type="text"
             name="paymentName"
@@ -90,15 +94,7 @@ const CreatePaymentModal = ({ isOpen, onClose, onPaymentCreated }) => {
             className="border p-2 rounded"
             required
           />
-          <select
-            name="paymentStatus"
-            value={formData.paymentStatus}
-            onChange={handleChange}
-            className="border p-2 rounded"
-          >
-            <option value="PENDING">Pending</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
+
           <textarea
             name="description"
             placeholder="Description"
