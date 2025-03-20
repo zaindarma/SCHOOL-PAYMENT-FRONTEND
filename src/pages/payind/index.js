@@ -7,15 +7,30 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
+import LoginModal from "./LoginModal";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const PayindPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []);
+
+  if (token) {
+    router.push("/payment");
+  }
+
   return (
     <main className={`${inter.variable} font-sans`}>
-      <NavbarPay />
+      <NavbarPay onClick={() => setIsModalOpen(true)} />
       <section className="min-h-screen bg-white">
         <div className="flex justify-between gap-8 px-10 items-center">
           <div className="flex flex-col">
@@ -97,6 +112,7 @@ const PayindPage = () => {
         </div>
       </section>
       <section className="min-h-screen bg-gray-200"></section>
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>
   );
 };

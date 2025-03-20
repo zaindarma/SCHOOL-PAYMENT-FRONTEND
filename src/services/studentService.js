@@ -2,11 +2,14 @@ import axios from "axios";
 const api = process.env.NEXT_PUBLIC_API;
 export async function getAllStudent(page = 0, size = 10, token) {
   try {
-    const response = await axios.get(`${api}/students?page=${page}&size=${size}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `${api}/students?page=${page}&size=${size}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     console.log("Failed to fetch student");
@@ -14,7 +17,10 @@ export async function getAllStudent(page = 0, size = 10, token) {
   }
 }
 
-export async function createStudent({ nis, name, classId, birthdate, address, phoneNumber }, token) {
+export async function createStudent(
+  { nis, name, classId, birthdate, address, phoneNumber },
+  token
+) {
   try {
     const payload = {
       nis,
@@ -36,7 +42,11 @@ export async function createStudent({ nis, name, classId, birthdate, address, ph
   }
 }
 
-export async function updateStudent(id, { nis, name, classId, birthdate, address, phoneNumber }, token) {
+export async function updateStudent(
+  id,
+  { nis, name, classId, birthdate, address, phoneNumber },
+  token
+) {
   try {
     const payload = {};
     if (nis) payload.nis = nis;
@@ -85,3 +95,18 @@ export async function softDeleteStudent(id, token) {
     return err;
   }
 }
+
+export const getStudentById = async (studentId) => {
+  try {
+    const token = localStorage.getItem("token"); // If authentication is needed
+    const response = await axios.get(`${api}/students/${studentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add this if using authentication
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+    throw error;
+  }
+};

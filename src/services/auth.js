@@ -89,7 +89,7 @@ export function isAdminUser() {
 // Handle Logout
 export function logout() {
   localStorage.removeItem("token");
-  window.location.href = "/login";
+  window.location.href = "/main";
 }
 
 export async function refreshToken(token) {

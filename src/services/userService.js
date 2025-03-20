@@ -44,11 +44,14 @@ export async function getUserById(id, token) {
 
 export async function getAllUserFilter(page, size, role, token) {
   try {
-    const response = await axios.get(`${api}/users/filter?role=${role}&page=${page}&size=${size}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `${api}/users/filter?role=${role}&page=${page}&size=${size}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     console.log("Failed to fetch user");
@@ -102,7 +105,11 @@ export async function hardDeleteUser(id, token) {
   }
 }
 
-export async function updateUser(id, { email, password, profilePicture, confirmPassword }, token) {
+export async function updateUser(
+  id,
+  { email, password, profilePicture, confirmPassword },
+  token
+) {
   try {
     const payload = {};
 
