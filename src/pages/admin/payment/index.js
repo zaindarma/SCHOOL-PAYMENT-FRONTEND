@@ -38,9 +38,7 @@ const PaymentPage = () => {
 
   // Update status pembayaran
   const handleUpdateStatus = async (paymentId, newStatus) => {
-    const confirmUpdate = window.confirm(
-      `Apakah Anda yakin ingin mengubah status pembayaran menjadi ${newStatus}?`
-    );
+    const confirmUpdate = window.confirm(`Apakah Anda yakin ingin mengubah status pembayaran menjadi ${newStatus}?`);
     if (!confirmUpdate) return;
 
     setLoadingUpdate(true);
@@ -66,9 +64,7 @@ const PaymentPage = () => {
   return (
     <Dashboard>
       <div className="container mx-auto p-4">
-        <h1 className="text-lg text-gray-700 font-bold mb-4">
-          Daftar Pembayaran
-        </h1>
+        <h1 className="text-lg text-gray-700 font-bold mb-4">Daftar Pembayaran</h1>
         <div className="flex flex-wrap justify-between items-center mb-4">
           {/* 🔹 Search Nama Siswa */}
           <input
@@ -89,11 +85,7 @@ const PaymentPage = () => {
           />
 
           {/* 🔹 Filter Status */}
-          <select
-            className="border p-2 rounded w-1/4"
-            value={filters.paymentStatus}
-            onChange={handleFilterChange}
-          >
+          <select className="border p-2 rounded w-1/4" value={filters.paymentStatus} onChange={handleFilterChange}>
             <option value="">Semua Status</option>
             <option value="PENDING">Pending</option>
             <option value="COMPLETED">Completed</option>
@@ -110,16 +102,12 @@ const PaymentPage = () => {
           📊 Export ke Excel
         </button>
 
-        {loading && (
-          <p className="text-center text-gray-500 dark:text-gray-300 mt-4">
-            Loading...
-          </p>
-        )}
+        {loading && <p className="text-center text-gray-500 dark:text-gray-300 mt-4">Loading...</p>}
         {error && <p className="text-red-500 text-center">{error}</p>}
 
         {payments?.length > 0 ? (
-          <table className="w-full bg-white dark:bg-gray-800 border-collapse shadow-md rounded-lg overflow-hidden mt-4">
-            <thead className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 uppercase text-sm">
+          <table className="w-full bg-white  border-collapse shadow-md rounded-lg overflow-hidden mt-4">
+            <thead className="bg-gray-200  text-gray-700  uppercase text-sm">
               <tr>
                 <th className="py-3 px-6 text-left">Nama Siswa</th>
                 <th className="py-3 px-6 text-left">Jenis Pembayaran</th>
@@ -128,18 +116,11 @@ const PaymentPage = () => {
                 <th className="py-3 px-6 text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700 dark:text-gray-300 text-sm">
+            <tbody className="text-gray-700  text-sm">
               {payments.map((payment) => (
-                <tr
-                  key={payment.paymentId}
-                  className="border-b border-gray-200 hover:bg-gray-100"
-                >
-                  <td className="py-3 px-6 text-left whitespace-nowrap">
-                    {payment.studentName}
-                  </td>
-                  <td className="py-3 px-6 text-left">
-                    {payment.paymentTypeName}
-                  </td>
+                <tr key={payment.paymentId} className="border-b border-gray-200 hover:bg-gray-100">
+                  <td className="py-3 px-6 text-left whitespace-nowrap">{payment.studentName}</td>
+                  <td className="py-3 px-6 text-left">{payment.paymentTypeName}</td>
                   <td className="py-3 px-6 text-center">
                     <span
                       className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${
@@ -153,34 +134,26 @@ const PaymentPage = () => {
                       {payment.paymentStatus}
                     </span>
                   </td>
-                  <td className="py-3 px-6 text-center">
-                    Rp {payment.amount.toLocaleString()}
-                  </td>
+                  <td className="py-3 px-6 text-center">Rp {payment.amount.toLocaleString()}</td>
                   <td className="py-3 px-6 text-center">
                     <div className="flex justify-center">
                       <button
                         className="bg-green-500 text-white px-3 py-1 rounded-full text-xs mx-1"
-                        onClick={() =>
-                          handleUpdateStatus(payment.paymentId, "COMPLETED")
-                        }
+                        onClick={() => handleUpdateStatus(payment.paymentId, "COMPLETED")}
                         disabled={loadingUpdate}
                       >
                         ✅ Selesaikan
                       </button>
                       <button
                         className="bg-red-500 text-white px-3 py-1 rounded-full text-xs mx-1"
-                        onClick={() =>
-                          handleUpdateStatus(payment.paymentId, "FAILED")
-                        }
+                        onClick={() => handleUpdateStatus(payment.paymentId, "FAILED")}
                         disabled={loadingUpdate}
                       >
                         ❌ Gagal
                       </button>
                       <button
                         className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs mx-1"
-                        onClick={() =>
-                          handleUpdateStatus(payment.paymentId, "REFUNDED")
-                        }
+                        onClick={() => handleUpdateStatus(payment.paymentId, "REFUNDED")}
                         disabled={loadingUpdate}
                       >
                         🔄 Refund
@@ -192,9 +165,7 @@ const PaymentPage = () => {
             </tbody>
           </table>
         ) : (
-          <p className="text-center text-gray-500">
-            Tidak ada data pembayaran.
-          </p>
+          <p className="text-center text-gray-500">Tidak ada data pembayaran.</p>
         )}
 
         {/* Pagination */}

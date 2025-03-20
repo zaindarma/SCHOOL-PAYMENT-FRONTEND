@@ -6,11 +6,7 @@ import { logout } from "@/services/auth";
 
 const Dashboard = ({ children }) => {
   const router = useRouter();
-  const currentPage = router.asPath
-    .split("/")
-    .filter(Boolean)
-    .pop()
-    .toLowerCase();
+  const currentPage = router.asPath.split("/").filter(Boolean).pop().toLowerCase();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -80,7 +76,7 @@ const Dashboard = ({ children }) => {
                 label: "School Year",
                 icon: <Icons.PhotoMerge />,
               },
-              { route: "/main", label: "Main website", icon: null },
+              { route: "/main", label: "Main website", icon: <Icons.Home /> },
             ].map(({ route, label, icon }) => (
               <li key={route}>
                 <a
@@ -110,9 +106,7 @@ const Dashboard = ({ children }) => {
       </aside>
 
       <div className="p-4 sm:ml-64">
-        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">
-          {children}
-        </div>
+        <div className="p2 sm:p4 rounded-lg dark:border-gray-700">{children}</div>
       </div>
     </>
   );

@@ -6,21 +6,15 @@ import SearchBar from "@/components/molecules/SearchBar/inedex";
 import { useToast } from "@/context/ToastContext";
 import { useClasses } from "@/hooks/useClasses";
 import { getToken } from "@/services/auth";
-import {
-  createClasses,
-  deleteClasses,
-  getClass,
-  updateClasses,
-} from "@/services/classesService";
-import { getAllSchoolYear } from "@/services/SchoolYearService";
+import { createClasses, deleteClasses, getClass, updateClasses } from "@/services/classesService";
+import { getAllSchoolYear, getSchoolYears } from "@/services/SchoolYearService";
 import React, { useEffect, useState } from "react";
 
 const DashboardClasses = () => {
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const { data, loading, error, totalPages, currentPage, fetchClasses } =
-    useClasses(page, 10, searchQuery, getToken());
+  const { data, loading, error, totalPages, currentPage, fetchClasses } = useClasses(page, 10, searchQuery, getToken());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     id: "",
@@ -56,8 +50,9 @@ const DashboardClasses = () => {
     const fetchSchoolYears = async () => {
       try {
         const data = await getSchoolYears(0, 1000);
+        console.log(data);
 
-        setSchoolYears(data?.data?.content);
+        setSchoolYears(data?.content);
       } catch (err) {
         console.log(err);
 
@@ -148,14 +143,8 @@ const DashboardClasses = () => {
     <div>
       <div className="bg-white px-5 mx-5 ibg-gray-900 shadow-md rounded-lg overflow-hidden">
         <div className="p-4 border-b iborder-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
-          <h3 className="text-lg font-semibold text-gray-700 itext-gray-300">
-            Classes List
-          </h3>
-          <SearchBar
-            handleSearchChange={handleSearchChange}
-            handleSearchSubmit={handleSearchSubmit}
-            search={search}
-          />
+          <h3 className="text-lg font-semibold text-gray-700 itext-gray-300">Classes List</h3>
+          <SearchBar handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} search={search} />
         </div>
 
         <ClassTableRow

@@ -7,15 +7,8 @@ const PaymentTypePage = () => {
   const [newName, setNewName] = useState(""); // Untuk tambah & edit
   const [editId, setEditId] = useState(null);
 
-  const {
-    paymentTypes,
-    loading,
-    error,
-    pagination,
-    addPaymentType,
-    updatePaymentType,
-    deletePaymentType,
-  } = usePaymentTypes(filters);
+  const { paymentTypes, loading, error, pagination, addPaymentType, updatePaymentType, deletePaymentType } =
+    usePaymentTypes(filters);
 
   const handleSearchChange = (e) => {
     setFilters({ ...filters, search: e.target.value, page: 0 });
@@ -35,11 +28,7 @@ const PaymentTypePage = () => {
 
   const handleUpdatePaymentType = () => {
     if (!newName.trim() || !editId) return;
-    if (
-      window.confirm(
-        "Apakah Anda yakin ingin memperbarui jenis pembayaran ini?"
-      )
-    ) {
+    if (window.confirm("Apakah Anda yakin ingin memperbarui jenis pembayaran ini?")) {
       updatePaymentType(editId, newName);
       setNewName("");
       setEditId(null);
@@ -47,9 +36,7 @@ const PaymentTypePage = () => {
   };
 
   const handleDeletePaymentType = (id) => {
-    if (
-      window.confirm("Apakah Anda yakin ingin menghapus jenis pembayaran ini?")
-    ) {
+    if (window.confirm("Apakah Anda yakin ingin menghapus jenis pembayaran ini?")) {
       deletePaymentType(id);
     }
   };
@@ -57,9 +44,7 @@ const PaymentTypePage = () => {
   return (
     <Dashboard>
       <div className="container mx-auto p-4">
-        <h1 className="text-lg text-gray-700 font-bold mb-4">
-          Daftar Jenis Pembayaran
-        </h1>
+        <h1 className="text-lg text-gray-700 font-bold mb-4">Daftar Jenis Pembayaran</h1>
 
         {/* 🔹 Input Search */}
         <input
@@ -80,17 +65,11 @@ const PaymentTypePage = () => {
             className="border-2 border-gray-200 rounded-lg p-2 w-full"
           />
           {editId ? (
-            <button
-              className="bg-yellow-500 text-white p-2"
-              onClick={handleUpdatePaymentType}
-            >
+            <button className="bg-yellow-500 text-white p-2" onClick={handleUpdatePaymentType}>
               Update
             </button>
           ) : (
-            <button
-              className="bg-blue-500 text-white p-2 rounded-lg"
-              onClick={handleAddPaymentType}
-            >
+            <button className="bg-blue-500 text-white p-2 rounded-lg" onClick={handleAddPaymentType}>
               Tambah
             </button>
           )}
@@ -100,7 +79,7 @@ const PaymentTypePage = () => {
         {error && <p className="text-red-500">{error}</p>}
 
         {paymentTypes.length > 0 ? (
-          <table className="w-full rounded-lg shadow-xl">
+          <table className="w-full bg-white  border-collapse shadow-md rounded-lg overflow-hidden mt-4">
             <thead>
               <tr className="bg-gray-200">
                 <th className="p-2">ID</th>
@@ -111,12 +90,8 @@ const PaymentTypePage = () => {
             <tbody>
               {paymentTypes.map((type) => (
                 <tr key={type.paymentTypeId} className="text-center">
-                  <td className="border-b-1 border-gray-200 p-2">
-                    {type.paymentTypeId}
-                  </td>
-                  <td className="border-b-1 border-gray-200 p-2">
-                    {type.paymentTypeName}
-                  </td>
+                  <td className="border-b-1 border-gray-200 p-2">{type.paymentTypeId}</td>
+                  <td className="border-b-1 border-gray-200 p-2">{type.paymentTypeName}</td>
                   <td className="border-b-1 border-gray-200 p-2 space-x-2">
                     <button
                       className="bg-yellow-500 text-white p-2 rounded-lg"
@@ -129,9 +104,7 @@ const PaymentTypePage = () => {
                     </button>
                     <button
                       className="bg-red-500 text-white p-2 rounded-lg"
-                      onClick={() =>
-                        handleDeletePaymentType(type.paymentTypeId)
-                      }
+                      onClick={() => handleDeletePaymentType(type.paymentTypeId)}
                     >
                       Hapus
                     </button>
@@ -141,9 +114,7 @@ const PaymentTypePage = () => {
             </tbody>
           </table>
         ) : (
-          <p className="text-center text-gray-500">
-            Tidak ada data jenis pembayaran.
-          </p>
+          <p className="text-center text-gray-500">Tidak ada data jenis pembayaran.</p>
         )}
 
         {/* Pagination */}
