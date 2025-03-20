@@ -6,6 +6,8 @@ import Chart from "./Chart";
 import Emoji404 from "./Emoji404";
 import FowardArrow from "./FowardArrow";
 import Groups from "./Groups";
+import Home from "./Home";
+import Logout from "./Logout";
 import MoreVert from "./MoreVert";
 import PhotoMerge from "./PhotoMerge";
 import Plus from "./Plus";
@@ -30,5 +32,7 @@ const Icons = {
   FowardArrow,
   MoreVert,
   Emoji404,
+  Home,
+  Logout,
 };
 export default Icons;

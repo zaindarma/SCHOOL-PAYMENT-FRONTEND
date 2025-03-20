@@ -4,7 +4,18 @@ import Dashboard from "@/components/templates/Dashboard";
 import useSchoolYears from "@/hooks/useSchoolYear";
 
 const SchoolYearList = () => {
-  const { schoolYears, loading, error, page, totalPages, nextPage, prevPage, handleCreate, handleUpdate, handleDelete } = useSchoolYears();
+  const {
+    schoolYears,
+    loading,
+    error,
+    page,
+    totalPages,
+    nextPage,
+    prevPage,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+  } = useSchoolYears();
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -55,7 +66,10 @@ const SchoolYearList = () => {
   return (
     <Dashboard>
       <div className="overflow-x-auto p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
-        <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition mb-4">
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition mb-4"
+        >
           + Create School Year
         </button>
 
@@ -63,7 +77,9 @@ const SchoolYearList = () => {
         {(showCreateModal || showEditModal) && (
           <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-1/3 transition transform scale-100">
-              <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">{showCreateModal ? "Create School Year" : "Edit School Year"}</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">
+                {showCreateModal ? "Create School Year" : "Edit School Year"}
+              </h3>
               <form onSubmit={showCreateModal ? handleCreateSubmit : handleUpdateSubmit} className="space-y-4">
                 <div>
                   <label className="block text-gray-600 dark:text-gray-300">School Year</label>
@@ -99,7 +115,10 @@ const SchoolYearList = () => {
                   />
                 </div>
                 <div className="flex justify-between">
-                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                  >
                     {showCreateModal ? "Create" : "Update"}
                   </button>
                   <button
@@ -135,16 +154,27 @@ const SchoolYearList = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300 text-sm">
-            {schoolYears.map((year, index) => (
-              <tr key={year.schoolYearId} className={`border-b ${index % 2 === 0 ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700"} hover:bg-gray-100 dark:hover:bg-gray-600 transition`}>
+            {schoolYears?.map((year, index) => (
+              <tr
+                key={year.schoolYearId}
+                className={`border-b ${
+                  index % 2 === 0 ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700"
+                } hover:bg-gray-100 dark:hover:bg-gray-600 transition`}
+              >
                 <td className="py-3 px-6">{year.schoolYear}</td>
                 <td className="py-3 px-6">{year.startDate}</td>
                 <td className="py-3 px-6">{year.endDate}</td>
                 <td className="py-3 px-6 text-center">
-                  <button onClick={() => handleEdit(year)} className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+                  <button
+                    onClick={() => handleEdit(year)}
+                    className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2"
+                  >
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteModal(year.schoolYearId)} className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                  <button
+                    onClick={() => handleDeleteModal(year.schoolYearId)}
+                    className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                  >
                     Delete
                   </button>
                 </td>
@@ -155,10 +185,18 @@ const SchoolYearList = () => {
 
         {/* Pagination */}
         <div className="mt-4 flex justify-between">
-          <button onClick={prevPage} disabled={page === 0} className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition disabled:opacity-50">
+          <button
+            onClick={prevPage}
+            disabled={page === 0}
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition disabled:opacity-50"
+          >
             Previous
           </button>
-          <button onClick={nextPage} disabled={page === totalPages - 1} className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition disabled:opacity-50">
+          <button
+            onClick={nextPage}
+            disabled={page === totalPages - 1}
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition disabled:opacity-50"
+          >
             Next
           </button>
         </div>
