@@ -3,6 +3,7 @@ import ArrowDown from "./ArrowDown";
 import BackArrow from "./BackArrow";
 import Badge from "./Badge";
 import Chart from "./Chart";
+import Emoji404 from "./Emoji404";
 import FowardArrow from "./FowardArrow";
 import Groups from "./Groups";
 import MoreVert from "./MoreVert";
@@ -28,5 +29,6 @@ const Icons = {
   BackArrow,
   FowardArrow,
   MoreVert,
+  Emoji404,
 };
 export default Icons;
