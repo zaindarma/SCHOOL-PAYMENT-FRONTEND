@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/router";
+import { isAdminUser } from "@/services/auth";
 
 const Navbar = ({ onClick }) => {
   const router = useRouter();
@@ -22,7 +23,9 @@ const Navbar = ({ onClick }) => {
   };
 
   return (
-    <nav className={`fixed z-30 top-0 left-0 w-full flex flex-wrap items-center justify-between px-16 bg-[#79242f] shadow-md p-4 transition-transform duration-300`}>
+    <nav
+      className={`fixed z-30 top-0 left-0 w-full flex flex-wrap items-center justify-between px-16 bg-[#79242f] shadow-md p-4 transition-transform duration-300`}
+    >
       <Link href={"/main"}>
         <h1 class="text-xl text-white font-bold">MIAW SCHOOL</h1>
       </Link>
@@ -55,26 +58,41 @@ const Navbar = ({ onClick }) => {
       </div>
 
       <div>
-        {token ? (
-          <button onClick={handleLogout} className="hover:text-blue-600 text-white px-4 py-2 rounded-md flex flex-row items-center gap-2">
-            Logout <ArrowRight size={20} />
-          </button>
-        ) : (
-          <list>
-            <ul class="md:flex items-center justify-between text-base text-white pt-4 md:pt-0">
+        <div>
+          {token ? (
+            <div className="flex items-center gap-4">
+              {/* Dashboard Button */}
+              {isAdminUser() && (
+                <Link href="/admin/users" className="md:p-4 py-3 px-0 block text-white hover:text-blue-600">
+                  Dashboard
+                </Link>
+              )}
+
+              {/* Logout Button */}
+              <button
+                onClick={handleLogout}
+                className="hover:text-blue-600 text-white px-4 py-2 rounded-md flex flex-row items-center gap-2"
+              >
+                Logout <ArrowRight size={20} />
+              </button>
+            </div>
+          ) : (
+            <ul className="md:flex items-center justify-between text-base text-white pt-4 md:pt-0">
               <li>
-                <Link class="md:p-4 py-3 px-0 block hover:text-blue-600" href="/register">
+                <Link className="md:p-4 py-3 px-0 block hover:text-blue-600" href="/register">
                   Register
                 </Link>
               </li>
               <li>
-                <button class="md:p-4 py-3 px-0 block bg-[#79242f] hover:text-blue-600" onClick={onClick}>
-                  Login
-                </button>
+                {router.pathname !== "/register" && (
+                  <button className="md:p-4 py-3 px-0 block bg-[#79242f] hover:text-blue-600" onClick={onClick}>
+                    Login
+                  </button>
+                )}
               </li>
             </ul>
-          </list>
-        )}
+          )}
+        </div>
       </div>
     </nav>
   );

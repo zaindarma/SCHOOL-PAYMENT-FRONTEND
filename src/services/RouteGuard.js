@@ -1,11 +1,5 @@
 import { useToast } from "@/context/ToastContext";
-import {
-  getToken,
-  isAdminUser,
-  isAuthenticated,
-  logout,
-  refreshToken,
-} from "./auth";
+import { getToken, isAdminUser, isAuthenticated, logout, refreshToken } from "./auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -44,7 +38,7 @@ const RouteGuard = ({ children }) => {
     const isAuth = isAuthenticated();
     const isAdmin = isAdminUser();
 
-    const publicPaths = ["/main", "/payind", "/register"];
+    const publicPaths = ["/main", "/payind", "/register", "/register/registsuccess"];
     const userPaths = ["/payment"];
     const isPublic = publicPaths.includes(router.pathname);
     const isUserPage = userPaths.includes(router.pathname);

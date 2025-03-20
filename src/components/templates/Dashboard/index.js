@@ -59,7 +59,7 @@ const Dashboard = ({ children }) => {
                   onClick={() => handleNavigation(route)}
                   className={`flex items-center p-2 rounded-lg cursor-pointer group ${
                     currentPage === route.split("/").pop()
-                      ? "bg-gray-200 dark:bg-gray-700"
+                      ? "text-blue-700 bg-gray-200 dark:bg-gray-700"
                       : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}
                 >
