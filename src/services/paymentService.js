@@ -3,7 +3,13 @@ import axios from "axios";
 const API_URL = `${process.env.NEXT_PUBLIC_API}/payments`;
 
 // Fungsi untuk mengambil pembayaran dengan filter, pencarian, & pagination
-export const getFilteredPayments = async ({ page = 0, size = 5, paymentStatus = "", studentName = "", paymentName = "" }) => {
+export const getFilteredPayments = async ({
+  page = 0,
+  size = 5,
+  paymentStatus = "",
+  studentName = "",
+  paymentName = "",
+}) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -66,12 +72,15 @@ export const downloadExcel = async () => {
     const response = await axios.get(`${API_URL}/export`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        Accept:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       },
       responseType: "blob", // Penting agar bisa menerima file binary
     });
 
-    const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -84,3 +93,35 @@ export const downloadExcel = async () => {
     throw error;
   }
 };
+
+export async function getPayment() {
+  try {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
+
+    const response = await axios.get(`${API_URL}/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log("Failed to fetch user");
+    return err;
+  }
+}
+
+export async function createPayment(data, token) {
+  try {
+    const response = await axios.post(`${API_URL}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log("Failed to create payment");
+    return err;
+  }
+}
