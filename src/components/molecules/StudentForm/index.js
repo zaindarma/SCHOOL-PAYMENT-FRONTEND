@@ -23,13 +23,7 @@ const StudentForm = ({
           {error && <p className="text-red-500 mb-2">{error}</p>}
 
           <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              name="id"
-              type="number"
-              value={formData.id}
-              hidden
-              readOnly
-            />
+            <input name="id" type="number" value={formData.id} hidden readOnly />
             <InputField
               type="text"
               name="nis"
@@ -37,6 +31,7 @@ const StudentForm = ({
               value={formData.nis}
               onChange={handleInputChange}
               required
+              readOnly
             />
             <InputField
               type="text"
@@ -55,20 +50,14 @@ const StudentForm = ({
               required
             >
               <option value="">Select Class</option>
-              {classes?.data.map((classItem) => (
+              {classes?.data?.content?.map((classItem) => (
                 <option key={classItem.classesId} value={classItem.classesId}>
                   {classItem.classesName}
                 </option>
               ))}
             </select>
 
-            <InputField
-              type="date"
-              name="birthdate"
-              value={formData.birthdate}
-              onChange={handleInputChange}
-              required
-            />
+            <InputField type="date" name="birthdate" value={formData.birthdate} onChange={handleInputChange} required />
             <InputField
               type="text"
               name="address"
@@ -87,17 +76,10 @@ const StudentForm = ({
             />
 
             <div className="flex justify-end space-x-2">
-              <button
-                type="button"
-                className="px-4 py-2 bg-gray-400 text-white rounded"
-                onClick={toggleModal}
-              >
+              <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={toggleModal}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
                 {loadingSubmit ? "Adding..." : "Add"}
               </button>
             </div>
