@@ -16,20 +16,12 @@ const StudentForm = ({
     {isModalOpen && (
       <div className="fixed inset-0 text-white flex justify-center items-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full border-2 border-gray-500">
-          <h2 className="text-xl font-bold mb-4 text-gray-700 ">
-            {isEditing ? "Update Student" : "Add New Student"}{" "}
-          </h2>
+          <h2 className="text-xl font-bold mb-4 text-gray-700 ">{isEditing ? "Update Student" : "Add New Student"} </h2>
 
           {error && <p className="text-red-500 mb-2">{error}</p>}
 
           <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              name="id"
-              type="number"
-              value={formData.id}
-              hidden
-              readOnly
-            />
+            <input name="id" type="number" value={formData.id} hidden readOnly />
             <InputField
               type="text"
               name="nis"
@@ -52,7 +44,7 @@ const StudentForm = ({
               name="classId"
               value={formData.classId}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded bg-gray-700"
+              className="w-full p-2 border rounded bg-white text-black"
               required
             >
               <option value="">Select Class</option>
@@ -63,13 +55,7 @@ const StudentForm = ({
               ))}
             </select>
 
-            <InputField
-              type="date"
-              name="birthdate"
-              value={formData.birthdate}
-              onChange={handleInputChange}
-              required
-            />
+            <InputField type="date" name="birthdate" value={formData.birthdate} onChange={handleInputChange} required />
             <InputField
               type="text"
               name="address"
@@ -88,17 +74,10 @@ const StudentForm = ({
             />
 
             <div className="flex justify-end space-x-2">
-              <button
-                type="button"
-                className="px-4 py-2 bg-gray-400 text-white rounded"
-                onClick={toggleModal}
-              >
+              <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={toggleModal}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
                 {loadingSubmit ? "Adding..." : "Add"}
               </button>
             </div>

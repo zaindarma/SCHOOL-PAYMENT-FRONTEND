@@ -8,8 +8,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         className={`p-1 rounded-md ${
           currentPage === 0
-            ? "text-gray-500 border-1 cursor-not-allowed"
-            : "border-1 text-white hover:bg-blue-600"
+            ? "text-gray-500 border-1 bg-blue-200 cursor-not-allowed"
+            : "border-1 text-white bg-blue-500 hover:bg-blue-800"
         }`}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 0}
@@ -26,8 +26,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         className={`p-1 rounded-md ${
           currentPage + 1 === totalPages
-            ? " text-gray-500 border-1 cursor-not-allowed"
-            : "border-1 text-white hover:bg-blue-600"
+            ? " text-gray-500 bg-blue-200 border-1 cursor-not-allowed"
+            : "border-1 text-white bg-blue-500 hover:bg-blue-800"
         }`}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage + 1 === totalPages}

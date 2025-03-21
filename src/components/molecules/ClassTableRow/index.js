@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icons from "@/components/atoms/Icons";
 
-const ClassTableRow = ({
-  data,
-  loading,
-  fetchError,
-  handleUpdate,
-  handleDelete,
-}) => {
+const ClassTableRow = ({ data, loading, fetchError, handleUpdate, handleDelete }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [dropdownPosition, setDropdownPosition] = useState({
     top: 0,
@@ -42,9 +36,7 @@ const ClassTableRow = ({
   return (
     <>
       {loading ? (
-        <p className="text-center p-4 text-gray-500 itext-gray-400">
-          Loading classes...
-        </p>
+        <p className="text-center p-4 text-gray-500 itext-gray-400">Loading classes...</p>
       ) : fetchError ? (
         <p className="text-center p-4 text-red-500">{fetchError}</p>
       ) : (
@@ -69,22 +61,13 @@ const ClassTableRow = ({
             <tbody className="bg-white ibg-gray-900 divide-y divide-gray-200 idivide-gray-700">
               {data?.data?.content?.length > 0 ? (
                 data?.data?.content?.map((classItem) => (
-                  <tr
-                    key={classItem.classesId}
-                    className="hover:bg-gray-100 ihover:bg-gray-800"
-                  >
-                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">
-                      {classItem.classesId}
-                    </td>
-                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">
-                      {classItem.classesName}
-                    </td>
-                    <td className="px-1 py-1 text-sm text-gray-500 itext-gray-400">
-                      {classItem.schoolYearId}
-                    </td>
+                  <tr key={classItem.classesId} className="hover:bg-gray-100 ihover:bg-gray-800">
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">{classItem.classesId}</td>
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 itext-gray-300">{classItem.classesName}</td>
+                    <td className="px-1 py-1 text-sm text-gray-500 itext-gray-400">{classItem.schoolYearId}</td>
                     <td className="px-1 py-1 text-center relative">
                       <button
-                        className="px-1 text-gray-500 itext-gray-300 hover:bg-gray-700 ihover:text-gray-400"
+                        className="px-1 bg-blue-500  hover:bg-gray-700 rounded-lg "
                         onClick={(e) => toggleDropdown(classItem.classesId, e)}
                       >
                         <Icons.MoreVert />
@@ -94,10 +77,7 @@ const ClassTableRow = ({
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="4"
-                    className="text-center py-4 text-gray-500 itext-gray-400"
-                  >
+                  <td colSpan="4" className="text-center py-4 text-gray-500 itext-gray-400">
                     No classes found.
                   </td>
                 </tr>

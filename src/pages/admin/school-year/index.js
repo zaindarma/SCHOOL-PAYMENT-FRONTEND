@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Dashboard from "@/components/templates/Dashboard";
 import useSchoolYears from "@/hooks/useSchoolYear";
+import { useToast } from "@/context/ToastContext";
+import ConfirmationModal from "@/components/molecules/ConfirmationModal";
 
 const SchoolYearList = () => {
   const {
@@ -19,13 +21,17 @@ const SchoolYearList = () => {
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [question, setQuestion] = useState("");
+  const [schoolYearId, setSchoolYearId] = useState(null);
+  const { showToast } = useToast();
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [editSchoolYear, setEditSchoolYear] = useState({
     id: "",
     schoolYear: "",
     startDate: "",
     endDate: "",
   });
-
+  const togglePrompt = () => setIsPromptOpen(!isPromptOpen);
   // Modal Create/Edit Form Change Handler (Unified)
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -55,11 +61,14 @@ const SchoolYearList = () => {
   };
 
   const handleDeleteModal = (id) => {
-    if (window.confirm("Are you sure you want to delete this school year?")) {
-      handleDelete(id);
-    }
+    setSchoolYearId(id);
+    setQuestion("Are you sure you want to delete this school year?");
+    togglePrompt();
   };
-
+  const handleDeleteConfirm = () => {
+    handleDelete(schoolYearId);
+    togglePrompt();
+  };
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -75,42 +84,42 @@ const SchoolYearList = () => {
 
         {/* Create/Edit Modal */}
         {(showCreateModal || showEditModal) && (
-          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="fixed inset-0  bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white  p-6 rounded-lg shadow-xl w-1/3 transition transform scale-100">
-              <h3 className="text-xl font-semibold mb-4 text-gray-700 ">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800 ">
                 {showCreateModal ? "Create School Year" : "Edit School Year"}
               </h3>
               <form onSubmit={showCreateModal ? handleCreateSubmit : handleUpdateSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-gray-600 dark:text-gray-300">School Year</label>
+                  <label className="block text-gray-600 ">School Year</label>
                   <input
                     type="text"
                     name="schoolYear"
                     value={editSchoolYear.schoolYear}
                     onChange={handleFormChange}
-                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300  border-gray-600 "
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-600 dark:text-gray-300">Start Date</label>
+                  <label className="block text-gray-600 ">Start Date</label>
                   <input
                     type="date"
                     name="startDate"
                     value={editSchoolYear.startDate}
                     onChange={handleFormChange}
-                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300  border-gray-600 "
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-600 dark:text-gray-300">End Date</label>
+                  <label className="block text-gray-600 ">End Date</label>
                   <input
                     type="date"
                     name="endDate"
                     value={editSchoolYear.endDate}
                     onChange={handleFormChange}
-                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    className="border p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-300  border-gray-600 "
                     required
                   />
                 </div>
@@ -198,6 +207,12 @@ const SchoolYearList = () => {
             Next
           </button>
         </div>
+        <ConfirmationModal
+          isOpen={isPromptOpen}
+          onCancel={togglePrompt}
+          onConfirm={handleDeleteConfirm}
+          question={question}
+        />
       </div>
     </Dashboard>
   );

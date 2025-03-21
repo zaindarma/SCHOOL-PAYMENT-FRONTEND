@@ -24,13 +24,7 @@ const ClassesForm = ({
 
           <form onSubmit={handleSubmit} className="space-y-3">
             {/* Hidden ID Field for Editing */}
-            <input
-              name="classesId"
-              type="number"
-              value={formData.classesId}
-              hidden
-              readOnly
-            />
+            <input name="classesId" type="number" value={formData.classesId} hidden readOnly />
 
             {/* Class Name */}
             <InputField
@@ -47,7 +41,7 @@ const ClassesForm = ({
               name="schoolYearId"
               value={formData.schoolYearId}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white bg-gray-700"
+              className="w-full p-2 border rounded text-gray-900 bg-white"
               required
             >
               <option value="">Select School Year</option>
@@ -60,24 +54,11 @@ const ClassesForm = ({
 
             {/* Buttons */}
             <div className="flex justify-end space-x-2">
-              <button
-                type="button"
-                className="px-4 py-2 bg-gray-400 text-white rounded"
-                onClick={toggleModal}
-              >
+              <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded" onClick={toggleModal}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
-                {loadingSubmit
-                  ? isEditing
-                    ? "Updating..."
-                    : "Adding..."
-                  : isEditing
-                  ? "Update"
-                  : "Add"}
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                {loadingSubmit ? (isEditing ? "Updating..." : "Adding...") : isEditing ? "Update" : "Add"}
               </button>
             </div>
           </form>

@@ -74,6 +74,8 @@ export async function getClass(id, token) {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response);
+
     return response.data;
   } catch (err) {
     console.log("Failed to fetch classes");

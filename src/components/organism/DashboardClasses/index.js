@@ -50,7 +50,6 @@ const DashboardClasses = () => {
     const fetchSchoolYears = async () => {
       try {
         const data = await getSchoolYears(0, 1000);
-        console.log(data);
 
         setSchoolYears(data?.content);
       } catch (err) {
@@ -100,8 +99,6 @@ const DashboardClasses = () => {
     e.preventDefault();
     setLoadingSubmit(true);
     try {
-      console.log(formData);
-
       await updateClasses(formData, getToken());
       toggleModal();
       resetFormData();
