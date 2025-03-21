@@ -1,14 +1,21 @@
 import { useState } from "react";
 import usePaymentTypes from "@/hooks/usePaymentTypes";
 import Dashboard from "@/components/templates/Dashboard";
+import ConfirmationModal from "@/components/molecules/ConfirmationModal";
+import { useToast } from "@/context/ToastContext";
 
 const PaymentTypePage = () => {
   const [filters, setFilters] = useState({ page: 0, size: 5, search: "" });
   const [newName, setNewName] = useState(""); // Untuk tambah & edit
   const [editId, setEditId] = useState(null);
-
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [question, setQuestion] = useState("Apakah Anda yakin?");
+  const { showToast } = useToast();
+  const [deleteId, setDeleteId] = useState(null);
   const { paymentTypes, loading, error, pagination, addPaymentType, updatePaymentType, deletePaymentType } =
     usePaymentTypes(filters);
+  const togglePrompt = () => setIsPromptOpen(!isPromptOpen);
 
   const handleSearchChange = (e) => {
     setFilters({ ...filters, search: e.target.value, page: 0 });
@@ -28,17 +35,25 @@ const PaymentTypePage = () => {
 
   const handleUpdatePaymentType = () => {
     if (!newName.trim() || !editId) return;
-    if (window.confirm("Apakah Anda yakin ingin memperbarui jenis pembayaran ini?")) {
-      updatePaymentType(editId, newName);
-      setNewName("");
-      setEditId(null);
-    }
+    setQuestion("Apakah Anda yakin ingin memperbarui jenis pembayaran ini?");
+    setIsDelete(false);
+    togglePrompt();
   };
-
+  const handleUpdatePaymentTypeConfirm = () => {
+    updatePaymentType(editId, newName);
+    showToast("Jenis pembayaran berhasil diperbarui.");
+    togglePrompt();
+  };
   const handleDeletePaymentType = (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus jenis pembayaran ini?")) {
-      deletePaymentType(id);
-    }
+    setIsDelete(true);
+    setQuestion("Apakah Anda yakin ingin menghapus jenis pembayaran ini?");
+    setDeleteId(id);
+    togglePrompt();
+  };
+  const handleDeletePaymentTypeConfirm = () => {
+    deletePaymentType(deleteId);
+    showToast("Jenis pembayaran berhasil dihapus.");
+    togglePrompt();
   };
 
   return (
@@ -139,6 +154,12 @@ const PaymentTypePage = () => {
             Next ➡️
           </button>
         </div>
+        <ConfirmationModal
+          isOpen={isPromptOpen}
+          onCancel={togglePrompt}
+          onConfirm={isDelete ? handleDeletePaymentTypeConfirm : handleUpdatePaymentTypeConfirm}
+          question={question}
+        />
       </div>
     </Dashboard>
   );

@@ -1,14 +1,7 @@
 import Icons from "@/components/atoms/Icons";
 import React, { useState, useEffect, useRef } from "react";
 
-const StudentTableRow = ({
-  data,
-  handleUpdate,
-  handleSoftDelete,
-  handleDelete,
-  loading,
-  fetchError,
-}) => {
+const StudentTableRow = ({ data, handleUpdate, handleSoftDelete, handleDelete, loading, fetchError }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [dropdownPosition, setDropdownPosition] = useState({
     top: 0,
@@ -51,18 +44,10 @@ const StudentTableRow = ({
           <table className="min-w-full divide-y divide-gray-200 ">
             <thead className="bg-gray-100 ">
               <tr>
-                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">
-                  Name
-                </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">
-                  Class
-                </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">
-                  Phone
-                </th>
-                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">
-                  Actions
-                </th>
+                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">Name</th>
+                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">Class</th>
+                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">Phone</th>
+                <th className="px-6 py-1 text-left text-xs font-medium text-black  uppercase">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white  divide-y divide-gray-200 ">
@@ -70,23 +55,15 @@ const StudentTableRow = ({
                 data?.data.map((student) => (
                   <tr
                     key={student.id}
-                    className={`hover:bg-gray-100  ${
-                      student.deletedAt && "bg-red-950"
-                    }`}
+                    className={` ${student.deletedAt ? "bg-red-700 text-white hover:bg-red-950" : "hover:bg-gray-100"}`}
                   >
-                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 ">
-                      {student.name}
-                    </td>
-                    <td className="px-1 py-1 text-sm text-black ">
-                      {student.classData.className}
-                    </td>
-                    <td className="px-1 py-1 text-sm text-black ">
-                      {student.phoneNumber}
-                    </td>
+                    <td className="pl-1 px-1 py-1 text-sm text-gray-900 ">{student.name}</td>
+                    <td className="px-1 py-1 text-sm text-black ">{student.classData.className}</td>
+                    <td className="px-1 py-1 text-sm text-black ">{student.phoneNumber}</td>
                     <td className="px-1 py-1 text-center relative">
                       {/* Three dots button */}
                       <button
-                        className="px-1 text-black  hover:bg-gray-700 "
+                        className="px-1 bg-blue-500  hover:bg-gray-700 rounded-lg "
                         onClick={(e) => toggleDropdown(student.id, e)}
                       >
                         <Icons.MoreVert />

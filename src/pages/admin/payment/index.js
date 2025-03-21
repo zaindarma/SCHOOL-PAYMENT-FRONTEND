@@ -2,6 +2,8 @@ import { useState } from "react";
 import usePayments from "@/hooks/usePayments";
 import Dashboard from "@/components/templates/Dashboard";
 import { updatePaymentStatus, downloadExcel } from "@/services/paymentService";
+import { useToast } from "@/context/ToastContext";
+import ConfirmationModal from "@/components/molecules/ConfirmationModal";
 
 const PaymentPage = () => {
   const [filters, setFilters] = useState({
@@ -14,7 +16,12 @@ const PaymentPage = () => {
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const { payments, loading, error, pagination } = usePayments(filters);
-
+  const { showToast } = useToast();
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const togglePrompt = () => setIsPromptOpen(!isPromptOpen);
+  const [question, setQuestion] = useState("Apakah Anda yakin?");
+  const [paymentId, setPaymentId] = useState(null);
+  const [newStatus, setNewStatus] = useState("");
   // Handle perubahan input search
   const handleSearchChange = (e) => {
     setFilters({ ...filters, studentName: e.target.value, page: 0 }); // Ubah dari `search` ke `studentName`
@@ -37,27 +44,31 @@ const PaymentPage = () => {
   };
 
   // Update status pembayaran
-  const handleUpdateStatus = async (paymentId, newStatus) => {
-    const confirmUpdate = window.confirm(`Apakah Anda yakin ingin mengubah status pembayaran menjadi ${newStatus}?`);
-    if (!confirmUpdate) return;
-
+  const handleUpdateStatus = async (id, status) => {
+    setQuestion(`Apakah Anda yakin ingin mengubah status pembayaran menjadi ${newStatus}?`);
+    setPaymentId(id);
+    setNewStatus(status);
+    togglePrompt();
+  };
+  const handleUpdateConfirm = async () => {
     setLoadingUpdate(true);
     try {
       await updatePaymentStatus(paymentId, newStatus);
-      alert(`Status pembayaran diperbarui menjadi ${newStatus}.`);
+      showToast("Status pembayaran berhasil diperbarui.");
       setFilters({ ...filters });
     } catch (error) {
-      alert("Gagal memperbarui status pembayaran.");
+      showToast("Gagal memperbarui status pembayaran.", true);
+    } finally {
+      setLoadingUpdate(false);
+      togglePrompt();
     }
-    setLoadingUpdate(false);
   };
-
   const handleExportExcel = async () => {
     try {
       await downloadExcel(filters);
-      alert("Export berhasil! File akan diunduh.");
+      showToast("Export berhasil! File akan diunduh.");
     } catch (error) {
-      alert("Gagal mengekspor data.");
+      showToast("Gagal mengekspor data.", true);
     }
   };
 
@@ -190,6 +201,12 @@ const PaymentPage = () => {
             Next ➡️
           </button>
         </div>
+        <ConfirmationModal
+          isOpen={isPromptOpen}
+          onCancel={togglePrompt}
+          onConfirm={handleUpdateConfirm}
+          question={question}
+        />
       </div>
     </Dashboard>
   );
